@@ -1,73 +1,107 @@
-# React + TypeScript + Vite
+# Splito 💙
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Split expenses. Not friendships.**
 
-Currently, two official plugins are available:
+Splito is a modern expense management application that helps individuals and groups track, split, and settle expenses with clarity.  
+Whether it’s personal spending or shared costs across trips, flats, or teams — Splito keeps money simple.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 👤 Personal Expenses
 
-## Expanding the ESLint configuration
+- Track your own expenses without any splits
+- Visual insights into spending habits
+- Simple, clutter-free experience
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 👥 Group Expenses
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Create groups for trips, flats, or teams
+- Split expenses equally or custom
+- Clear balances: who owes whom, instantly
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 📊 Smart Insights
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Clean charts for spending trends
+- Monthly summaries and comparisons
+- Actionable insights, not noise
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🤖 Smart Automation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Automatic balance updates
+- No need to settle every expense manually
+- One-time splits, ongoing clarity
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🎨 Thoughtful UI & Motion
+
+- Bento-style layout
+- Micro-interactions with Framer Motion
+- Calm, blue-first fintech design language
+
+---
+
+## 🧱 Tech Stack
+
+**Frontend**
+
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Recharts
+
+**Tooling**
+
+- Bun (package manager & runtime)
+- ESLint + Prettier
+- Modern asset optimization (dynamic imports)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Bun installed  
+  👉 https://bun.sh
+
+### Installation
+
+```bash
+bun install
+Run locally
+bash
+Copy code
+bun dev
+
+The app will be available at:
+http://localhost:5173
+
+🧠 Design Philosophy
+
+- Clarity over cleverness
+
+- Motion with purpose
+
+- Data that tells a story
+
+- Finance without friction
+
+- Splito is designed to feel calm, transparent, and trustworthy — not overwhelming.
+
+🤝 Contributing
+
+- Contributions, ideas, and feedback are welcome.
+
+- Fork the repo
+
+- Create a feature branch
+
+- Commit with clarity
+
+- Open a PR
+
+📄 License
+MIT License
 ```
