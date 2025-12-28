@@ -70,13 +70,19 @@ Whether it’s personal spending or shared costs across trips, flats, or teams �
 
 ```bash
 bun install
+```
+
 Run locally
-bash
-Copy code
+
+```bash
 bun dev
+```
 
 The app will be available at:
+
+```bash
 http://localhost:5173
+```
 
 🧠 Design Philosophy
 
@@ -104,4 +110,3 @@ http://localhost:5173
 
 📄 License
 MIT License
-```
