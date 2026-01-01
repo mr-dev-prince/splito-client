@@ -1,5 +1,9 @@
+import AnalyticsTab from "@/components/ui/analytics/main";
 import Dash from "@/components/ui/dashboard/dash";
 import DashboardNav from "@/components/ui/dashboard/dashboard-nav";
+import NotificationsTab from "@/components/ui/notifications/main";
+import ExpensePlansTab from "@/components/ui/plans/main";
+import ProfileTab from "@/components/ui/profile/main";
 import SettingsTab from "@/components/ui/settings/main";
 import React, { useState } from "react";
 
@@ -23,13 +27,13 @@ const Dashboard: React.FC = () => {
       case "dash":
         return <Dash />;
       case "analytics":
-        return <div>Analytics Content</div>;
+        return <AnalyticsTab />;
       case "plans":
-        return <div>Plans Content</div>;
+        return <ExpensePlansTab />;
       case "notifications":
-        return <div>Notifications Content</div>;
+        return <NotificationsTab />;
       case "account":
-        return <div>Account Content</div>;
+        return <ProfileTab />;
       case "settings":
         return <SettingsTab />;
       default:

@@ -28,7 +28,7 @@ const ManageExpense: React.FC<ManageExpenseProps> = ({ className }) => {
         className,
       )}
     >
-      <div className="w-full p-1">
+      <div className="pointer-events-none w-full p-1">
         <div className="h-32 w-full border">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} barGap={6}>

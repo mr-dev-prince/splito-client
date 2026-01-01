@@ -27,16 +27,15 @@ const SettingsTab: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 rounded-4xl border bg-white p-4 shadow-2xl">
-      <header className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight text-white">
+    <div className="h-screen space-y-6 rounded-4xl border bg-white p-4 shadow-2xl">
+      <header className="mb-4">
+        <h2 className="text-3xl font-bold tracking-tight text-blue-950">
           System Settings
         </h2>
         <p className="mt-1 text-gray-500">
           Configure your automation and security preferences.
         </p>
       </header>
-
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Automation settings={settings} toggle={toggle} />
         <Security settings={settings} toggle={toggle} />
