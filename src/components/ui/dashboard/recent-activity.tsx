@@ -40,9 +40,14 @@ const ACTIVITIES: Activity[] = [
 const RecentActivity: React.FC = () => {
   return (
     <div className="space-y-4 lg:col-span-2">
-      <h3 className="flex items-center gap-2 text-xl font-semibold text-blue-950">
-        <Clock size={20} className="text-blue-950" /> Recent Activity
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-xl font-semibold text-blue-950">
+          <Clock size={20} className="text-blue-950" /> Recent Activity
+        </h3>
+        <button className="text-sm text-blue-950 hover:text-blue-500 hover:underline">
+          View All
+        </button>
+      </div>
       <div className="overflow-hidden rounded-xl border border-gray-800 bg-[#1A1C1E]">
         {ACTIVITIES.map((item, idx) => (
           <div
@@ -80,9 +85,6 @@ const RecentActivity: React.FC = () => {
             </div>
           </div>
         ))}
-        <button className="w-full bg-gray-900/30 p-4 text-sm text-gray-500 transition-colors hover:text-blue-400">
-          View All Activity
-        </button>
       </div>
     </div>
   );

@@ -32,6 +32,22 @@ const GROUPS: Group[] = [
     status: "settled",
     color: "bg-gray-600",
   },
+  {
+    id: 3,
+    name: "College",
+    members: ["https://i.pravatar.cc/150?u=4", "https://i.pravatar.cc/150?u=5"],
+    totalSpent: "$1,120.50",
+    status: "settled",
+    color: "bg-gray-600",
+  },
+  {
+    id: 4,
+    name: "Work",
+    members: ["https://i.pravatar.cc/150?u=4", "https://i.pravatar.cc/150?u=5"],
+    totalSpent: "$1,120.50",
+    status: "settled",
+    color: "bg-gray-600",
+  },
 ];
 
 const RecentGroups: React.FC = () => {
@@ -41,12 +57,12 @@ const RecentGroups: React.FC = () => {
         <h3 className="flex items-center gap-2 text-xl font-semibold text-blue-950">
           <Users size={20} className="text-blue-950" /> Recent Groups
         </h3>
-        <button className="text-sm text-blue-950 hover:underline">
+        <button className="text-sm text-blue-950 hover:text-blue-500 hover:underline">
           View All
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid h-fit grid-cols-1 gap-4 md:grid-cols-2">
         {GROUPS.map((group) => (
           <GroupCard key={group.id} group={group} />
         ))}

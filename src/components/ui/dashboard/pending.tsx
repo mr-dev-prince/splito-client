@@ -17,9 +17,14 @@ const SETTLEMENTS: Settlement[] = [
 const Pending: React.FC = () => {
   return (
     <div className="space-y-4">
-      <h3 className="flex items-center gap-2 text-xl font-semibold text-blue-950">
-        <ClipboardClock size={20} className="text-blue-950" /> Pending
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-xl font-semibold text-blue-950">
+          <ClipboardClock size={20} className="text-blue-950" /> Pending
+        </h3>
+        <button className="text-sm text-blue-950 hover:text-blue-500 hover:underline">
+          View All
+        </button>
+      </div>
       <div className="space-y-3">
         {SETTLEMENTS.map((person) => (
           <div

@@ -1,6 +1,11 @@
 import React from "react";
 
-const CustomTooltip: React.FC<any> = ({ active, payload }) => {
+interface TooltipProps {
+  active?: boolean;
+  payload?: string[];
+}
+
+const CustomTooltip: React.FC<TooltipProps> = ({ active, payload }) => {
   if (!active || !payload) return null;
 
   return (

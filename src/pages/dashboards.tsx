@@ -1,5 +1,6 @@
 import Dash from "@/components/ui/dashboard/dash";
 import DashboardNav from "@/components/ui/dashboard/dashboard-nav";
+import SettingsTab from "@/components/ui/settings/main";
 import React, { useState } from "react";
 
 export type tabType =
@@ -30,7 +31,7 @@ const Dashboard: React.FC = () => {
       case "account":
         return <div>Account Content</div>;
       case "settings":
-        return <div>Settings Content</div>;
+        return <SettingsTab />;
       default:
         return <div>Dashboard Content</div>;
     }
