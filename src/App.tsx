@@ -4,6 +4,7 @@ import Nav from "./components/common/nav";
 import Home from "./pages/home";
 import Footer from "./components/common/footer";
 import Dashboard from "./pages/dashboards";
+import Groups from "./pages/groups";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/groups" element={<Groups />} />
       </Routes>
       <Footer />
     </Router>

@@ -21,11 +21,6 @@ export const primaryNav: INav[] = [
     href: "/expenses",
   },
   {
-    id: "settlements",
-    label: "Settlements",
-    href: "/settlements",
-  },
-  {
     id: "activity",
     label: "Activity",
     href: "/activity",
