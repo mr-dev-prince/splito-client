@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from "recharts";
 import CustomTooltip from "./custom-tooltip";
+import { motion } from "motion/react";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +24,11 @@ const ExpenseStackedBarChart: React.FC<{ className?: string }> = ({
   className,
 }) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      whileHover={{ y: -4 }}
       className={cn(
         "h-80 w-full cursor-pointer border-none outline-none",
         className,
@@ -52,7 +57,7 @@ const ExpenseStackedBarChart: React.FC<{ className?: string }> = ({
           />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </motion.div>
   );
 };
 

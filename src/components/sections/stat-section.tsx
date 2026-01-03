@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { TextAnimate } from "../ui/text-animate";
 import ExpenseInsightChart from "../ui/expense-insight-chart";
 import { NumberTicker } from "../ui/number-ticker";
+import GroupSettlementCard from "../ui/home/group-settlement-card";
 
 const Stats: React.FC = () => {
   return (
@@ -29,46 +30,18 @@ const Stats: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         viewport={{ once: true }}
-        className="mt-12 flex w-full flex-col items-start justify-between px-4 lg:flex-row lg:px-24"
+        className="mt-12 flex w-full flex-col items-start justify-between gap-8 px-4 lg:flex-row lg:px-24"
       >
-        <div className="hidden w-1/2 items-center justify-center lg:flex">
-          <motion.form className="flex flex-col gap-5">
-            <motion.div className="input-group">
-              <label className="input-label" htmlFor="">
-                Monthly Income
-              </label>
-              <input className="input-box" type="text" />
-            </motion.div>
-            <motion.div className="input-group">
-              <label className="input-label" htmlFor="">
-                Average Monthly Expenses
-              </label>
-              <input className="input-box" type="text" />
-            </motion.div>
-            <motion.div className="input-group">
-              <label className="input-label" htmlFor="">
-                Groups you split with
-              </label>
-              <input className="input-box" type="text" />
-            </motion.div>
-            <motion.div className="input-group">
-              <label className="input-label" htmlFor="">
-                Your saving goal
-              </label>
-              <input className="input-box" type="text" />
-            </motion.div>
-            <motion.div className="input-group">
-              <label className="input-label" htmlFor="">
-                Time Range
-              </label>
-              <input className="input-box" type="text" />
-            </motion.div>
-            <motion.button className="mt-2 w-96 rounded-md bg-blue-500 py-3 font-medium text-white hover:bg-blue-600">
-              Analyze My Spending
-            </motion.button>
-          </motion.form>
+        <div className="w-full items-center justify-center lg:flex lg:w-1/2">
+          <GroupSettlementCard />
         </div>
-        <div className="h-full rounded-md bg-white p-4 shadow-lg lg:w-1/2">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          whileHover={{ y: -4 }}
+          className="h-full cursor-pointer rounded-3xl bg-white p-4 shadow-lg lg:w-1/2"
+        >
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 rounded-md bg-white px-3 py-1.5 shadow-sm">
               <span className="h-4 w-4 rounded-sm bg-[#1E3A8A]" />
@@ -110,7 +83,7 @@ const Stats: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
