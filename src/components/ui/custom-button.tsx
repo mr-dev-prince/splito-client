@@ -30,7 +30,7 @@ const CustomButton: React.FC<LoginButtonProps> = ({
       )}
       onClick={onClick}
     >
-      <p className="px-2 font-semibold text-white capitalize">{label}</p>
+      <p className="px-2 font-semibold text-white">{label}</p>
 
       <motion.div
         className="flex items-center justify-center rounded-full bg-white p-2"

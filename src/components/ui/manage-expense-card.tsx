@@ -29,7 +29,7 @@ const ManageExpense: React.FC<ManageExpenseProps> = ({ className }) => {
       )}
     >
       <div className="pointer-events-none w-full p-1">
-        <div className="h-32 w-full border">
+        <div className="h-32 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} barGap={6}>
               <XAxis hide />
