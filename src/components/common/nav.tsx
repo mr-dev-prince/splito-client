@@ -1,18 +1,17 @@
 import React from "react";
 import { motion } from "motion/react";
 import { primaryNav } from "../../constants/nav-options";
-import { KeyRound } from "lucide-react";
+import { KeyRoundIcon } from "lucide-react";
 import CustomButton from "../ui/custom-button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 import Logo from "./logo";
 
 const Nav: React.FC = () => {
-  const router = useNavigate();
-  const handleAuthClick = () => {
-    // Handle authentication click (e.g., open sign-in modal)
-    router("/auth");
-  };
   return (
     <motion.div className="z-9999 flex h-full w-full items-center justify-between border-b p-4 shadow-xl lg:bg-none lg:px-24 lg:shadow-none">
       <Logo />
@@ -35,11 +34,9 @@ const Nav: React.FC = () => {
       </motion.div>
       <div>
         <SignedOut>
-          <CustomButton
-            onClick={handleAuthClick}
-            label="Sign in"
-            logo={<KeyRound size={14} />}
-          />
+          <SignInButton mode="modal">
+            <CustomButton label="Sign in" logo={<KeyRoundIcon size={14} />} />
+          </SignInButton>
         </SignedOut>
         <SignedIn>
           <UserButton />

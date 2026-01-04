@@ -7,7 +7,6 @@ import Dashboard from "./pages/dashboards";
 import Groups from "./pages/groups";
 import ExpensesPage from "./pages/expenses";
 import ActivityPage from "./pages/activity";
-import AuthPage from "./pages/auth";
 
 const App: React.FC = () => {
   return (
@@ -19,7 +18,6 @@ const App: React.FC = () => {
         <Route path="/groups" element={<Groups />} />
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/activity" element={<ActivityPage />} />
-        <Route path="/auth" element={<AuthPage />} />
       </Routes>
       <Footer />
     </Router>
