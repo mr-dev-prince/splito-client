@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboards";
 import Groups from "./pages/groups";
 import ExpensesPage from "./pages/expenses";
 import ActivityPage from "./pages/activity";
+import { Toaster } from "react-hot-toast";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/activity" element={<ActivityPage />} />
       </Routes>
       <Footer />
+      <Toaster position="top-right" />
     </Router>
   );
 };

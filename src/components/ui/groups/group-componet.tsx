@@ -1,7 +1,9 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import Hero from "./hero";
 import AnalyticSection from "./analytic-section";
 import GroupCard from "./group-card";
+import { api } from "@/lib/api";
+import { notifyError } from "@/lib/toast";
 
 const groups = [
   {
@@ -25,6 +27,26 @@ const groups = [
 ];
 
 const GroupsTab: React.FC = () => {
+  
+  const fetchGroups = async () => {
+    try {
+      const res = await api.get("/groups");
+      console.log(res.data);
+    } catch (error) {
+      if (error instanceof Error) {
+        notifyError(error.message);
+        console.log("Error fetching groups:", error.message);
+      } else {
+        notifyError("An unexpected error occurred.");
+        console.log("fetchGroups - unexpected error:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
   return (
     <div className="min-h-screen space-y-4 rounded-2xl border bg-white p-6 shadow-2xl">
       <AnalyticSection />
