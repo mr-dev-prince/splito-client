@@ -13,3 +13,9 @@ export interface GroupsState {
   loading: boolean;
   error: string | null;
 }
+
+export interface GroupMember {
+  name: string;
+  email: string | null;
+  phone: string | null;
+}

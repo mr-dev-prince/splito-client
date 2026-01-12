@@ -1,8 +1,6 @@
-// redux/features/groups/groupsSlice.ts
-
 import { createSlice } from "@reduxjs/toolkit";
 import type { GroupsState } from "./group-types";
-import { createGroup, fetchGroups } from "./group-thunks";
+import { addGroupMember, createGroup, fetchGroups } from "./group-thunks";
 
 const initialState: GroupsState = {
   list: [],
@@ -44,6 +42,18 @@ const groupsSlice = createSlice({
       .addCase(createGroup.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload ?? "Failed to create group";
+      })
+
+      // add group member
+      .addCase(addGroupMember.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addGroupMember.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addGroupMember.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? "Failed to add group member";
       });
   },
 });

@@ -48,8 +48,6 @@ const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
             value={group.balance || 0}
           />
         </div>
-
-        {/* CTA */}
         <button
           onClick={() => navigate(`/groups/${group.id}`)}
           className="mt-auto w-full rounded-xl border border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 transition-all hover:border-blue-500 hover:text-blue-600 active:scale-95"

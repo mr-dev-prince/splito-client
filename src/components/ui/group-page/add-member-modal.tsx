@@ -1,8 +1,9 @@
-import { api } from "@/lib/api";
+import React, { useState } from "react";
 import { notifyError, notifySuccess } from "@/lib/toast";
 import { Users, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import React, { useState } from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import { addGroupMember } from "@/redux/features/groups/group-thunks";
 
 interface AddMemberModalProps {
   open: boolean;
@@ -11,26 +12,51 @@ interface AddMemberModalProps {
 
 const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose }) => {
   const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("+91 ");
+
+  const urlSegments = window.location.href.split("/");
+  const groupId = urlSegments[urlSegments.length - 1];
+
+  const [usePhone, setUsePhone] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await api.post("/groups", {
-        name,
-      });
-      if (res.status === 201) {
-        notifySuccess("Group created successfully!");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-        notifyError(`Failed to create group: ${error.message}`);
-      } else {
-        console.log(error);
-        notifyError("An unexpected error occurred.");
-      }
+    if (!name.trim() || !email.trim()) {
+      notifyError("Name and email cannot be empty.");
+      return;
     }
-    onClose();
+    if (usePhone && !phone.trim()) {
+      notifyError("Phone number cannot be empty.");
+      return;
+    }
+    if (usePhone && !/^\+?[0-9]{7,15}$/.test(phone.trim())) {
+      notifyError("Please enter a valid phone number.");
+      return;
+    }
+    if (usePhone && phone.trim().length < 10) {
+      notifyError("Phone number is too short.");
+      return;
+    }
+
+    const res = await dispatch(
+      addGroupMember({
+        groupId: Number(groupId),
+        name: name.trim(),
+        email: usePhone ? null : email.trim(),
+        phone: usePhone ? phone.trim() : null,
+      }),
+    );
+
+    if (addGroupMember.fulfilled.match(res)) {
+      notifySuccess("Group member added successfully!");
+      setName("");
+      onClose();
+    } else {
+      notifyError("Failed to add group member");
+    }
   };
 
   return (
@@ -76,15 +102,39 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose }) => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="mb-1 block text-xs text-gray-500">
-                  Member Email
+                <label className="mb-1 block pl-2 text-xs text-gray-500">
+                  Member Name
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter member's email"
+                  placeholder="Enter member's name"
                   className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                />
+                <div className="flex justify-between">
+                  <label className="mt-4 mb-1 block pl-2 text-xs text-gray-500">
+                    Member {usePhone ? "Phone" : "Email"}
+                  </label>
+                  <button
+                    className="mt-4 mb-1 block pl-2 text-xs text-gray-500 hover:text-blue-500"
+                    onClick={() => setUsePhone(!usePhone)}
+                  >
+                    use phone
+                  </button>
+                </div>
+                <input
+                  type={usePhone ? "tel" : "email"}
+                  maxLength={usePhone ? 13 : 100}
+                  minLength={usePhone ? 10 : undefined}
+                  placeholder={`Enter member's ${usePhone ? "phone" : "email"}`}
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
+                  value={usePhone ? phone : email}
+                  onChange={(e) =>
+                    usePhone
+                      ? setPhone(e.target.value)
+                      : setEmail(e.target.value)
+                  }
                 />
               </div>
             </div>

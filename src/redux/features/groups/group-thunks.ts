@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/lib/api";
-import type { Group } from "./group-types";
+import type { Group, GroupMember } from "./group-types";
 
 export const fetchGroups = createAsyncThunk<
   Group[],
@@ -28,7 +28,35 @@ export const createGroup = createAsyncThunk<
     const res = await api.post("/groups", { name });
     dispatch(fetchGroups());
     return res.data;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to create group");
+  } catch (err) {
+    let message = "An unexpected error occurred.";
+    if (err instanceof Error) {
+      message = err.message;
+    }
+    return rejectWithValue(message);
   }
 });
+
+export const addGroupMember = createAsyncThunk<
+  GroupMember,
+  { groupId: number; name: string; email: string | null; phone: string | null },
+  { rejectValue: string | undefined }
+>(
+  "groups/addGroupMember",
+  async ({ groupId, name, email, phone }, { rejectWithValue }) => {
+    try {
+      const res = await api.post(`/groups/${groupId}/members`, {
+        name,
+        email,
+        phone,
+      });
+      return res.data;
+    } catch (error) {
+      let message = "An unexpected error occurred.";
+      if (error instanceof Error) {
+        message = error.message;
+      }
+      return rejectWithValue(message);
+    }
+  },
+);
