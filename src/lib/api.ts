@@ -13,6 +13,7 @@ api.interceptors.request.use(
     const token = await getAuthToken();
 
     if (token) {
+      config.headers = config.headers ?? {};
       config.headers.Authorization = `Bearer ${token}`;
     }
 

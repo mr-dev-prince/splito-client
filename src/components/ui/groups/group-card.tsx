@@ -2,15 +2,11 @@ import React from "react";
 import { motion } from "motion/react";
 import { Users } from "lucide-react";
 import { NumberTicker } from "../number-ticker";
-
-interface Group {
-  id: number;
-  name: string;
-  members: number;
-  balance: number;
-}
+import { useNavigate } from "react-router-dom";
+import type { Group } from "@/redux/features/groups/group-types";
 
 const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
+  const navigate = useNavigate();
   return (
     <motion.div
       key={group.id}
@@ -34,7 +30,9 @@ const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
             <p className="truncate text-sm font-semibold text-gray-800">
               {group.name}
             </p>
-            <p className="text-xs text-gray-500">{group.members} members</p>
+            <p className="text-xs text-gray-500">
+              {group.memberCount || 1} members
+            </p>
           </div>
         </div>
         <div className="rounded-xl bg-gray-50 px-3 py-2">
@@ -47,12 +45,15 @@ const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
                   ? "text-red-500"
                   : "text-gray-500"
             }`}
-            value={group.balance}
+            value={group.balance || 0}
           />
         </div>
 
         {/* CTA */}
-        <button className="mt-auto w-full rounded-xl border border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 transition-all hover:border-blue-500 hover:text-blue-600 active:scale-95">
+        <button
+          onClick={() => navigate(`/groups/${group.id}`)}
+          className="mt-auto w-full rounded-xl border border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 transition-all hover:border-blue-500 hover:text-blue-600 active:scale-95"
+        >
           Open group
         </button>
       </div>

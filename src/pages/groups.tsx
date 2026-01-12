@@ -1,5 +1,5 @@
 import React from "react";
-import GroupsTab from "@/components/ui/groups/group-componet";
+import GroupsTab from "@/components/ui/groups/group-tab";
 
 const Groups: React.FC = () => {
   // useEffect(() => {

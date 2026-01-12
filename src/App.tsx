@@ -8,6 +8,7 @@ import Groups from "./pages/groups";
 import ExpensesPage from "./pages/expenses";
 import ActivityPage from "./pages/activity";
 import { Toaster } from "react-hot-toast";
+import GroupPage from "./pages/group-page";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,8 @@ const App: React.FC = () => {
         <Route path="/groups" element={<Groups />} />
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/activity" element={<ActivityPage />} />
+        {/* Dynamic routes */}
+        <Route path="/groups/:groupId" element={<GroupPage />} />
       </Routes>
       <Footer />
       <Toaster position="top-right" />
