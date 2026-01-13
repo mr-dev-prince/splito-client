@@ -8,10 +8,19 @@ export interface Group {
   createdAt: string;
 }
 
+export interface GroupDetails extends Group {
+  total_spent: number;
+  my_balance: number;
+  member_count: number;
+}
+
 export interface GroupsState {
   list: Group[];
   loading: boolean;
   error: string | null;
+  currentGroup: GroupDetails | null;
+  currentGroupLoading: boolean;
+  currentGroupError: string | null;
 }
 
 export interface GroupMember {

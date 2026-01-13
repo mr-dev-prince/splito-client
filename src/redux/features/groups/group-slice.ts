@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { GroupsState } from "./group-types";
-import { addGroupMember, createGroup, fetchGroups } from "./group-thunks";
+import type { GroupDetails, GroupsState } from "./group-types";
+import {
+  addGroupMember,
+  createGroup,
+  fetchGroupData,
+  fetchGroups,
+} from "./group-thunks";
 
 const initialState: GroupsState = {
   list: [],
   loading: false,
   error: null,
+  currentGroup: null,
+  currentGroupLoading: false,
+  currentGroupError: null,
 };
 
 const groupsSlice = createSlice({
@@ -14,6 +22,7 @@ const groupsSlice = createSlice({
   reducers: {
     clearGroupsError(state) {
       state.error = null;
+      state.currentGroupError = null;
     },
   },
   extraReducers: (builder) => {
@@ -54,6 +63,20 @@ const groupsSlice = createSlice({
       .addCase(addGroupMember.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload ?? "Failed to add group member";
+      })
+
+      // fetch group data
+      .addCase(fetchGroupData.pending, (state) => {
+        state.currentGroupLoading = true;
+      })
+      .addCase(fetchGroupData.fulfilled, (state, action) => {
+        state.currentGroupLoading = false;
+        state.currentGroup = action.payload as GroupDetails;
+      })
+      .addCase(fetchGroupData.rejected, (state, action) => {
+        state.currentGroupLoading = false;
+        state.currentGroupError =
+          action.payload ?? "Failed to fetch group data";
       });
   },
 });

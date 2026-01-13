@@ -1,31 +1,120 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Users } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { notifyError, notifySuccess } from "@/lib/toast";
+import { useParams } from "react-router-dom";
+import type {
+  CreateExpensePayload,
+  SplitStrategy,
+} from "@/redux/features/expenses/expense-type";
+import { createExpense } from "@/redux/features/expenses/expense-thunk";
 
 interface AddExpenseModalProps {
   onClose: () => void;
   open: boolean;
 }
 
-// dummy members
-const members = [
-  { id: 1, name: "You" },
-  { id: 2, name: "Rahul" },
-  { id: 3, name: "Amit" },
-];
-
-type SplitType = "equal" | "percentage" | "exact";
-
 const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
+  const { list: members } = useAppSelector((state) => state.members);
+  const { groupId } = useParams<{ groupId: string }>();
+
+  const dispatch = useAppDispatch();
+
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState<number>(0);
-  const [splitType, setSplitType] = useState<SplitType>("equal");
-
+  const [splitType, setSplitType] = useState<SplitStrategy>("equal");
   const [splits, setSplits] = useState<Record<number, number>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  /* -------------------- helpers -------------------- */
 
   const handleSplitChange = (id: number, value: number) => {
     setSplits((prev) => ({ ...prev, [id]: value }));
   };
+
+  const buildSplitsPayload = () => {
+    if (!members || members.length === 0) return [];
+
+    if (splitType === "equal") {
+      const perHead = Number((amount / members.length).toFixed(2));
+      return members.map((m) => ({
+        member_id: m.id,
+        amount: perHead,
+      }));
+    }
+
+    if (splitType === "percentage") {
+      return members.map((m) => ({
+        member_id: m.id,
+        amount: Number((((splits[m.id] || 0) * amount) / 100).toFixed(2)),
+      }));
+    }
+
+    // exact
+    return members.map((m) => ({
+      member_id: m.id,
+      amount: Number((splits[m.id] || 0).toFixed(2)),
+    }));
+  };
+
+  const isSplitValid = () => {
+    if (splitType === "percentage") {
+      const total = Object.values(splits).reduce((a, b) => a + b, 0);
+      return total === 100;
+    }
+
+    if (splitType === "exact") {
+      const total = Object.values(splits).reduce((a, b) => a + b, 0);
+      return total === amount;
+    }
+
+    return true; // equal
+  };
+
+  /* -------------------- submit -------------------- */
+
+  const handleSave = async () => {
+    if (!title.trim()) {
+      notifyError("Expense title is required");
+      return;
+    }
+
+    if (amount <= 0) {
+      notifyError("Amount must be greater than zero");
+      return;
+    }
+
+    if (!isSplitValid()) {
+      notifyError("Split values do not match total");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+
+      const payload: CreateExpensePayload = {
+        title,
+        amount,
+        strategy: splitType,
+        splits: buildSplitsPayload(),
+      };
+
+      await dispatch(
+        createExpense({ groupId: Number(groupId), data: payload }),
+      ).unwrap();
+
+      notifySuccess("Expense added successfully");
+      onClose();
+    } catch (err) {
+      notifyError("Failed to add expense");
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  /* -------------------- UI -------------------- */
 
   return (
     <AnimatePresence>
@@ -72,6 +161,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
 
             {/* Form */}
             <div className="space-y-4">
+              {/* Title */}
               <div>
                 <label className="mb-1 block text-xs text-gray-500">
                   Title
@@ -84,6 +174,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                 />
               </div>
 
+              {/* Amount */}
               <div>
                 <label className="mb-1 block text-xs text-gray-500">
                   Amount
@@ -97,27 +188,29 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                 />
               </div>
 
-              {/* Split Strategy */}
+              {/* Split strategy */}
               <div>
                 <p className="mb-2 text-xs text-gray-500">Split strategy</p>
                 <div className="flex gap-2">
-                  {["equal", "percentage", "exact"].map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => setSplitType(type as SplitType)}
-                      className={`flex-1 rounded-lg px-3 py-2 text-xs font-medium transition ${
-                        splitType === type
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {type}
-                    </button>
-                  ))}
+                  {(["equal", "percentage", "exact"] as SplitStrategy[]).map(
+                    (type) => (
+                      <button
+                        key={type}
+                        onClick={() => setSplitType(type)}
+                        className={`flex-1 rounded-lg px-3 py-2 text-xs font-medium transition ${
+                          splitType === type
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ),
+                  )}
                 </div>
               </div>
 
-              {/* Members split */}
+              {/* Member splits */}
               <div className="space-y-2">
                 {members.map((m) => (
                   <div
@@ -128,7 +221,8 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
 
                     {splitType === "equal" ? (
                       <p className="text-sm text-gray-500">
-                        ₹{amount ? (amount / members.length).toFixed(0) : 0}
+                        ₹
+                        {amount ? (amount / members.length).toFixed(2) : "0.00"}
                       </p>
                     ) : (
                       <input
@@ -155,9 +249,11 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                 Cancel
               </button>
               <motion.button
+                disabled={submitting}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
-                className="rounded-xl bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow hover:bg-blue-700"
+                onClick={handleSave}
+                className="rounded-xl bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 disabled:opacity-60"
               >
                 Save expense
               </motion.button>

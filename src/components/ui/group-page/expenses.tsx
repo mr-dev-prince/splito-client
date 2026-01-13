@@ -1,11 +1,33 @@
-import React, { useState } from "react";
-import { motion } from "motion/react";
-import { Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAuth } from "@clerk/clerk-react";
+import { fetchExpenses } from "@/redux/features/expenses/expense-thunk";
+import { getGroupIdFromPath } from "@/lib/utils";
+import ExpenseCard from "./expense-card";
+import ListWithSkeleton from "../utils/list-with-skeleton";
+import ExpenseCardShimmer from "../shimmers/expense-card";
+import ErrorOverlay from "../utils/error-overlay";
 
 export type SortOptions = "latest" | "oldest" | "amount_high" | "amount_low";
 
 const Expenses: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortOptions>("latest");
+  const dispatch = useAppDispatch();
+
+  const { list, loading, error } = useAppSelector((state) => state.expenses);
+  console.log(list);
+  const { isSignedIn, isLoaded } = useAuth();
+  const groupId = getGroupIdFromPath(window.location.pathname);
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    if (!groupId) return;
+    const fetchData = async () => {
+      await dispatch(fetchExpenses({ groupId }));
+    };
+
+    fetchData();
+  }, [dispatch, isLoaded, isSignedIn, groupId]);
 
   return (
     <div className="space-y-3">
@@ -23,37 +45,19 @@ const Expenses: React.FC = () => {
           <option value="amount_low">Amount: Low → High</option>
         </select>
       </div>
-
-      {[1, 2, 3].map((i) => (
-        <motion.div
-          key={i}
-          whileHover={{ y: -2 }}
-          className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-blue-100" />
-            <div>
-              <p className="text-sm font-medium text-gray-800">
-                Dinner at Baga
-              </p>
-              <p className="text-xs text-gray-500">Added by Rahul</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="text-right">
-              <p className="text-xs text-gray-500">Total</p>
-              <p className="text-sm font-semibold">₹1,200</p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs text-gray-500">Your share</p>
-              <p className="text-sm font-semibold text-red-500">₹300</p>
-            </div>
-            <button className="rounded-lg p-2 text-red-500 hover:bg-red-50">
-              <Trash2 size={16} />
-            </button>
-          </div>
-        </motion.div>
-      ))}
+      <ErrorOverlay
+        error={error}
+        onRetry={() => dispatch(fetchExpenses({ groupId: Number(groupId) }))}
+      >
+        <ListWithSkeleton
+          loading={loading}
+          data={list}
+          Skeleton={ExpenseCardShimmer}
+          renderItem={(expense) => (
+            <ExpenseCard key={expense.id} data={expense} />
+          )}
+        />
+      </ErrorOverlay>
     </div>
   );
 };

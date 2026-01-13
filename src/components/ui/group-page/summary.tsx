@@ -1,16 +1,23 @@
+import { useAppSelector } from "@/redux/hooks";
 import React from "react";
 
 const Summary: React.FC = () => {
+  const { currentGroup } = useAppSelector((state) => state.groups);
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       <div className="rounded-2xl bg-white p-4 shadow-sm">
         <p className="text-xs text-gray-500">Total spent</p>
-        <p className="mt-1 text-2xl font-semibold text-gray-800">₹12,300</p>
+        <p className="mt-1 text-2xl font-semibold text-gray-800">
+          ₹{currentGroup?.total_spent || 0}
+        </p>
       </div>
       <div className="rounded-2xl bg-white p-4 shadow-sm">
         <p className="text-xs text-gray-500">Your balance</p>
-        <p className="mt-1 text-xl font-semibold text-green-600">
-          ₹1,250 owed to you
+        <p
+          className={`mt-1 text-xl font-semibold text-green-600 ${currentGroup?.my_balance || 0 > 0 ? "text-green-600" : "text-red-600"}`}
+        >
+          ₹{currentGroup?.my_balance || 0}{" "}
+          {currentGroup?.my_balance || 0 > 0 ? "owed to you" : "you owe"}
         </p>
       </div>
       <div className="rounded-2xl bg-white p-4 shadow-sm">

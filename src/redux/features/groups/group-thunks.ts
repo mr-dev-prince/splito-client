@@ -60,3 +60,20 @@ export const addGroupMember = createAsyncThunk<
     }
   },
 );
+
+export const fetchGroupData = createAsyncThunk<
+  Group,
+  { groupId: number },
+  { rejectValue: string | undefined }
+>("groups/fetchGroupData", async ({ groupId }, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`/groups/${groupId}`);
+    return res.data as Group;
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
