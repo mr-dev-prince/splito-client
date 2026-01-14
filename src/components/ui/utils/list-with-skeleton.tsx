@@ -1,4 +1,5 @@
 import React from "react";
+import NoData from "./no-data";
 
 interface ListWithSkeletonProps<T> {
   loading: boolean;
@@ -7,6 +8,7 @@ interface ListWithSkeletonProps<T> {
   Skeleton: React.FC;
   skeletonCount?: number;
   getKey?: (item: T, index: number) => React.Key;
+  vertical?: boolean;
 }
 
 function ListWithSkeleton<T>({
@@ -16,10 +18,11 @@ function ListWithSkeleton<T>({
   Skeleton,
   skeletonCount = 5,
   getKey,
+  vertical = true,
 }: ListWithSkeletonProps<T>) {
   if (loading) {
     return (
-      <div className="space-y-3">
+      <div className={vertical ? "space-y-3" : "flex space-x-3"}>
         {Array.from({ length: skeletonCount }).map((_, i) => (
           <Skeleton key={i} />
         ))}
@@ -27,8 +30,12 @@ function ListWithSkeleton<T>({
     );
   }
 
+  if (!loading && data.length === 0) {
+    return <NoData />;
+  }
+
   return (
-    <div className="space-y-3">
+    <div className={vertical ? "space-y-3" : "flex space-x-3"}>
       {data.map((item, index) => (
         <React.Fragment key={getKey ? getKey(item, index) : index}>
           {renderItem(item)}

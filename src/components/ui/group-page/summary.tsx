@@ -1,29 +1,33 @@
 import { useAppSelector } from "@/redux/hooks";
 import React from "react";
+import ComponentWithSkeleton from "../utils/component-with-skeleton";
+import SummaryShimmer from "../shimmers/summary-cards";
+import type { GroupDetails } from "@/redux/features/groups/group-types";
+
+import { AnalyticsPreviewCard } from "./analytics-card";
+import { PersonalBalanceCard } from "./balance-card";
+import { TotalSpentCard } from "./total-spent-card";
 
 const Summary: React.FC = () => {
-  const { currentGroup } = useAppSelector((state) => state.groups);
+  const { currentGroup, currentGroupLoading } = useAppSelector(
+    (state) => state.groups,
+  );
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <p className="text-xs text-gray-500">Total spent</p>
-        <p className="mt-1 text-2xl font-semibold text-gray-800">
-          ₹{currentGroup?.total_spent || 0}
-        </p>
-      </div>
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <p className="text-xs text-gray-500">Your balance</p>
-        <p
-          className={`mt-1 text-xl font-semibold text-green-600 ${currentGroup?.my_balance || 0 > 0 ? "text-green-600" : "text-red-600"}`}
-        >
-          ₹{currentGroup?.my_balance || 0}{" "}
-          {currentGroup?.my_balance || 0 > 0 ? "owed to you" : "you owe"}
-        </p>
-      </div>
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <p className="text-xs text-gray-500">Analytics</p>
-        <div className="mt-3 h-20 rounded-xl bg-linear-to-r from-blue-100 to-blue-50" />
-      </div>
+    <ComponentWithSkeleton
+      loading={currentGroupLoading}
+      data={currentGroup}
+      Component={SummaryComponent}
+      Skeleton={SummaryShimmer}
+    />
+  );
+};
+
+const SummaryComponent: React.FC<{ data: GroupDetails }> = ({ data }) => {
+  return (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <TotalSpentCard amount={data.total_spent} />
+      <PersonalBalanceCard balance={data.my_balance} />
+      <AnalyticsPreviewCard />
     </div>
   );
 };

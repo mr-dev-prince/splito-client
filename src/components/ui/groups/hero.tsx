@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <div className="rounded-2xl bg-white p-4 shadow-2xl">
+      <div className="rounded-2xl border-2 border-blue-500 bg-white p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-center gap-2">
             <Users />

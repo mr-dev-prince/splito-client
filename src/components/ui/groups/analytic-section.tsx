@@ -63,7 +63,7 @@ const AnalyticsSection: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-2xl">
+      <div className="flex items-center justify-between rounded-2xl border-2 border-blue-500 bg-white p-4">
         <div className="flex items-center justify-center gap-2">
           <ChartPie />
           <h1 className="text-2xl font-medium text-gray-800">
@@ -71,7 +71,7 @@ const AnalyticsSection: React.FC = () => {
           </h1>
         </div>
         <button onClick={() => setShowAnalytics((prev) => !prev)}>
-          {showAnalytics ? <Eye /> : <EyeOff />}
+          {showAnalytics ? <Eye color="#2663EB" /> : <EyeOff color="red" />}
         </button>
       </div>
       <AnimatePresence mode="wait">
@@ -82,7 +82,7 @@ const AnalyticsSection: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="grid grid-cols-4 gap-4 rounded-2xl bg-white p-3 shadow-2xl"
+            className="grid grid-cols-4 gap-4 rounded-2xl border bg-white p-3"
           >
             <motion.div variants={itemVariants}>
               <StatCard label="Total expense this month" value="5,600" />
@@ -94,7 +94,7 @@ const AnalyticsSection: React.FC = () => {
 
             <motion.div
               variants={itemVariants}
-              className="rounded-2xl bg-white p-5 shadow-sm"
+              className="rounded-2xl border bg-white p-5 shadow-sm"
             >
               <p className="mb-4 text-sm font-medium text-gray-700">
                 Group-wise expense
@@ -122,7 +122,7 @@ const AnalyticsSection: React.FC = () => {
 
             <motion.div
               variants={itemVariants}
-              className="rounded-2xl bg-white p-5 shadow-sm"
+              className="rounded-2xl border bg-white p-5 shadow-sm"
             >
               <p className="mb-4 text-sm font-medium text-gray-700">
                 Expense categories

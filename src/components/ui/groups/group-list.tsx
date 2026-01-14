@@ -5,6 +5,7 @@ import { fetchGroups } from "@/redux/features/groups/group-thunks";
 import { notifyError } from "@/lib/toast";
 import GroupCard from "./group-card";
 import GroupCardShimmer from "../shimmers/group-card";
+import ListWithSkeleton from "../utils/list-with-skeleton";
 
 const GroupList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,12 +25,14 @@ const GroupList: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex h-fit w-full gap-5 rounded-2xl bg-white p-3 shadow-2xl">
-        {loading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <GroupCardShimmer key={i} />
-            ))
-          : list.map((group) => <GroupCard key={group.id} group={group} />)}
+      <div className="flex h-fit w-full gap-5 rounded-2xl border bg-white p-3">
+        <ListWithSkeleton
+          loading={loading}
+          data={list}
+          Skeleton={GroupCardShimmer}
+          renderItem={(group) => <GroupCard key={group.id} group={group} />}
+          vertical={false}
+        />
       </div>
     </div>
   );

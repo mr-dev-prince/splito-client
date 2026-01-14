@@ -1,4 +1,5 @@
 import React from "react";
+import NoData from "./no-data";
 
 interface ComponentWithSkeletonProps<T> {
   loading: boolean;
@@ -15,6 +16,10 @@ function ComponentWithSkeleton<T>({
 }: ComponentWithSkeletonProps<T>) {
   if (loading || !data) {
     return <Skeleton />;
+  }
+
+  if (!data) {
+    return <NoData />;
   }
 
   return <Component data={data} />;

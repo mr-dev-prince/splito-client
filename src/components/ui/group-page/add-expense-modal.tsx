@@ -9,6 +9,7 @@ import type {
   SplitStrategy,
 } from "@/redux/features/expenses/expense-type";
 import { createExpense } from "@/redux/features/expenses/expense-thunk";
+import { fetchGroupData } from "@/redux/features/groups/group-thunks";
 
 interface AddExpenseModalProps {
   onClose: () => void;
@@ -105,6 +106,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
       ).unwrap();
 
       notifySuccess("Expense added successfully");
+      await dispatch(fetchGroupData({ groupId: Number(groupId) })).unwrap();
       onClose();
     } catch (err) {
       notifyError("Failed to add expense");

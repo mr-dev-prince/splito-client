@@ -25,7 +25,7 @@ const membersSlice = createSlice({
       })
       .addCase(fetchGroupMembers.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = action.payload;
+        state.list = action.payload as typeof state.list;
       })
       .addCase(fetchGroupMembers.rejected, (state, action) => {
         state.loading = false;
