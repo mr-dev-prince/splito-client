@@ -31,7 +31,7 @@ const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
               {group.name}
             </p>
             <p className="text-xs text-gray-500">
-              {group.memberCount || 1} members
+              {group.member_count} members
             </p>
           </div>
         </div>
@@ -39,13 +39,13 @@ const GroupCard: React.FC<{ group: Group }> = ({ group }) => {
           <p className="text-xs text-gray-500">Your balance</p>
           <NumberTicker
             className={`text-2xl font-semibold ${
-              group.balance > 0
+              group.my_balance > 0
                 ? "text-green-600"
-                : group.balance < 0
+                : group.my_balance < 0
                   ? "text-red-500"
                   : "text-gray-500"
             }`}
-            value={group.balance || 0}
+            value={group.my_balance || 0}
           />
         </div>
         <button

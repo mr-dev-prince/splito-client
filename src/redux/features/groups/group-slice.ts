@@ -3,6 +3,7 @@ import type { GroupDetails, GroupsState } from "./group-types";
 import {
   addGroupMember,
   createGroup,
+  deleteGroup,
   fetchGroupData,
   fetchGroups,
 } from "./group-thunks";
@@ -14,6 +15,8 @@ const initialState: GroupsState = {
   currentGroup: null,
   currentGroupLoading: false,
   currentGroupError: null,
+  deleteGroupLoading: false,
+  deleteGroupError: null,
 };
 
 const groupsSlice = createSlice({
@@ -77,6 +80,22 @@ const groupsSlice = createSlice({
         state.currentGroupLoading = false;
         state.currentGroupError =
           action.payload ?? "Failed to fetch group data";
+      })
+
+      // delete group
+      .addCase(deleteGroup.fulfilled, (state, action) => {
+        state.list = state.list.filter(
+          (group) => group.id !== (action.meta.arg.groupId as number),
+        );
+        state.deleteGroupLoading = false;
+      })
+      .addCase(deleteGroup.rejected, (state, action) => {
+        state.deleteGroupError = action.payload as string;
+        state.deleteGroupLoading = false;
+      })
+      .addCase(deleteGroup.pending, (state) => {
+        state.deleteGroupLoading = true;
+        state.deleteGroupError = null;
       });
   },
 });

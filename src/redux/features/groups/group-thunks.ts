@@ -77,3 +77,20 @@ export const fetchGroupData = createAsyncThunk<
     return rejectWithValue(message);
   }
 });
+
+export const deleteGroup = createAsyncThunk<
+  void,
+  { groupId: number },
+  { rejectValue: string | undefined }
+>("groups/deleteGroup", async ({ groupId }, { dispatch, rejectWithValue }) => {
+  try {
+    await api.delete(`/groups/${groupId}`);
+    dispatch(fetchGroups());
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Users } from "lucide-react";
 import { notifyError, notifySuccess } from "@/lib/toast";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createGroup } from "@/redux/features/groups/group-thunks";
+import Loader from "../utils/loader-component";
 
 interface CreateGroupModalProps {
   open: boolean;
@@ -17,6 +18,8 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   const dispatch = useAppDispatch();
   const [name, setName] = useState("");
 
+  const { loading } = useAppSelector((state) => state.groups);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -24,7 +27,6 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
       notifyError("Group name cannot be empty.");
       return;
     }
-
     const res = await dispatch(createGroup({ name }));
 
     if (createGroup.fulfilled.match(res)) {
@@ -104,8 +106,13 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
                 className="rounded-xl bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow hover:bg-blue-700"
+                disabled={loading}
               >
-                Create group
+                {loading ? (
+                  <Loader loading={loading} size="sm" />
+                ) : (
+                  "Create group"
+                )}
               </motion.button>
             </div>
           </motion.div>

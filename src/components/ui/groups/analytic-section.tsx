@@ -63,7 +63,7 @@ const AnalyticsSection: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between rounded-2xl border-2 border-blue-500 bg-white p-4">
+      <div className="border-accent flex items-center justify-between rounded-2xl bg-white p-4">
         <div className="flex items-center justify-center gap-2">
           <ChartPie />
           <h1 className="text-2xl font-medium text-gray-800">

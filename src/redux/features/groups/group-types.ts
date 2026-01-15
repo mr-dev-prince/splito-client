@@ -2,16 +2,16 @@ export interface Group {
   id: number;
   name: string;
   created_by: number;
-  memberCount: number;
-  balance: number;
-  isAdmin: boolean;
   createdAt: string;
+  my_balance: number;
+  member_count: number;
 }
 
 export interface GroupDetails extends Group {
   total_spent: number;
   my_balance: number;
   member_count: number;
+  is_admin: boolean;
 }
 
 export interface GroupsState {
@@ -21,6 +21,8 @@ export interface GroupsState {
   currentGroup: GroupDetails | null;
   currentGroupLoading: boolean;
   currentGroupError: string | null;
+  deleteGroupLoading: boolean;
+  deleteGroupError: string | null;
 }
 
 export interface GroupMember {

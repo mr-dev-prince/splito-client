@@ -194,3 +194,8 @@ button {
 .recharts-surface:focus {
   outline: none;
 }
+
+/* accent borders */
+.border-accent {
+  @apply border-2 border-blue-500/30 duration-200 hover:border-blue-500/70;
+}

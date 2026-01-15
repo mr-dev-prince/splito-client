@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { BanknoteArrowUp, LogOut, UserRoundPlus } from "lucide-react";
+import { BanknoteArrowUp, LogOut, Trash2, UserRoundPlus } from "lucide-react";
 import AddMemberModal from "./add-member-modal";
 import AddExpenseModal from "./add-expense-modal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchGroupData } from "@/redux/features/groups/group-thunks";
-import { useParams } from "react-router-dom";
+import {
+  deleteGroup,
+  fetchGroupData,
+} from "@/redux/features/groups/group-thunks";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import ComponentWithSkeleton from "../utils/component-with-skeleton";
 import GroupHeaderShimmer from "../shimmers/group-header-shimmer";
 import type { GroupDetails } from "@/redux/features/groups/group-types";
+import ConfirmationPopUp from "../utils/confirmation-pop-up";
+import { notifyError } from "@/lib/toast";
 
 interface GroupHeaderComponentProps {
   data: GroupDetails | null;
@@ -48,8 +53,33 @@ const GroupHeader: React.FC = () => {
 const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
   data,
 }) => {
-  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
-  const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] =
+    useState<boolean>(false);
+  const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] =
+    useState<boolean>(false);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
+    useState<boolean>(false);
+  const [isExitConfirmationOpen, setIsExitConfirmationOpen] =
+    useState<boolean>(false);
+
+  const { deleteGroupLoading } = useAppSelector((state) => state.groups);
+  const router = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const handleDeleteGroup = async () => {
+    try {
+      if (!data?.id) return;
+      await dispatch(deleteGroup({ groupId: data.id }));
+      setIsDeleteConfirmationOpen(false);
+      router("/groups");
+    } catch (error) {
+      if (error instanceof Error) {
+        notifyError(error.message);
+      }
+    }
+  };
+
   return (
     <div className="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-md sm:flex-row sm:items-center sm:justify-between">
       <div>
@@ -75,10 +105,20 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
         >
           <UserRoundPlus size={16} />
         </motion.button>
-
+        {data?.is_admin && (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+            onClick={() => setIsDeleteConfirmationOpen(true)}
+          >
+            <Trash2 size={16} />
+          </motion.button>
+        )}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => setIsExitConfirmationOpen(true)}
           className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
         >
           <LogOut size={16} />
@@ -91,6 +131,19 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
       <AddExpenseModal
         open={isAddExpenseModalOpen}
         onClose={() => setIsAddExpenseModalOpen(false)}
+      />
+      <ConfirmationPopUp
+        message="Are you sure you want to delete this group ? This action cannot be undone."
+        onConfirm={handleDeleteGroup}
+        onCancel={() => setIsDeleteConfirmationOpen(false)}
+        open={isDeleteConfirmationOpen}
+        loading={deleteGroupLoading}
+      />
+      <ConfirmationPopUp
+        message="Are you sure you want to exit this group ?"
+        onConfirm={() => {}}
+        onCancel={() => setIsExitConfirmationOpen(false)}
+        open={isExitConfirmationOpen}
       />
     </div>
   );

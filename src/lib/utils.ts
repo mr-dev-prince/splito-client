@@ -14,3 +14,4 @@ export function getGroupIdFromPath(path: string): number | null {
   }
   return null;
 }
+
