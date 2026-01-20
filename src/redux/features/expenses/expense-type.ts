@@ -30,3 +30,8 @@ export interface CreateExpensePayload {
   strategy: SplitStrategy;
   splits: ExpenseSplitInput[];
 }
+
+export interface DeleteExpensePayload {
+  expenseId: number;
+  groupId: number;
+}

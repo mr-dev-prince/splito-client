@@ -42,6 +42,18 @@ const expenseSlice = createSlice({
       .addCase(createExpense.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload ?? "Failed to create expense";
+      })
+
+      // deleteExpense
+      .addCase("expenses/deleteExpense/pending", (state) => {
+        state.loading = true;
+      })
+      .addCase("expenses/deleteExpense/fulfilled", (state) => {
+        state.loading = false;
+      })
+      .addCase("expenses/deleteExpense/rejected", (state) => {
+        state.loading = false;
+        state.error = "Failed to delete expense";
       });
   },
 });
