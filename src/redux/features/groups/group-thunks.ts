@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/lib/api";
-import type { Group, GroupMember } from "./group-types";
+import type {
+  Group,
+  GroupMember,
+  UpdateGroupNameResponse,
+  WeeklyActivityResponse,
+} from "./group-types";
 
 export const fetchGroups = createAsyncThunk<
   Group[],
@@ -61,6 +66,22 @@ export const addGroupMember = createAsyncThunk<
   },
 );
 
+export const removeGroupMember = createAsyncThunk<
+  void,
+  { memberId: number },
+  { rejectValue: string | undefined }
+>("members/removeMember", async ({ memberId }, { rejectWithValue }) => {
+  try {
+    await api.delete(`/members/${memberId}`);
+  } catch (error) {
+    let message = "An unexpected error occurred.";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
 export const fetchGroupData = createAsyncThunk<
   Group,
   { groupId: number },
@@ -86,6 +107,40 @@ export const deleteGroup = createAsyncThunk<
   try {
     await api.delete(`/groups/${groupId}`);
     dispatch(fetchGroups());
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
+export const fetchWeeklyActivity = createAsyncThunk<
+  WeeklyActivityResponse,
+  { groupId: number },
+  { rejectValue: string | undefined }
+>("groups/fetchWeeklyActivity", async ({ groupId }, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`/groups/${groupId}/weekly-activity`);
+    return res.data as WeeklyActivityResponse;
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
+export const updateGroupName = createAsyncThunk<
+  UpdateGroupNameResponse,
+  { groupId: number; name: string },
+  { rejectValue: string | undefined }
+>("groups/updateGroupName", async ({ groupId, name }, { rejectWithValue }) => {
+  try {
+    const res = await api.patch(`/groups/${groupId}`, { name });
+    return res.data as UpdateGroupNameResponse;
   } catch (error) {
     let message;
     if (error instanceof Error) {

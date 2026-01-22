@@ -29,7 +29,6 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
   const [splits, setSplits] = useState<Record<number, number>>({});
   const [submitting, setSubmitting] = useState(false);
 
-
   const handleSplitChange = (id: number, value: number) => {
     setSplits((prev) => ({ ...prev, [id]: value }));
   };
@@ -161,7 +160,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Dinner, Groceries, Taxi"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm capitalize focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
                 />
               </div>
               <div>
@@ -170,9 +169,9 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                 </label>
                 <input
                   type="number"
-                  value={amount}
+                  value={amount == 0 ? "Enter amount" : amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
-                  placeholder="0"
+                  placeholder="Enter amount"
                   className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
                 />
               </div>

@@ -6,17 +6,29 @@ import {
   deleteGroup,
   fetchGroupData,
   fetchGroups,
+  fetchWeeklyActivity,
+  updateGroupName,
 } from "./group-thunks";
 
 const initialState: GroupsState = {
+  // All groups
   list: [],
   loading: false,
   error: null,
+  // Current group details
   currentGroup: null,
   currentGroupLoading: false,
   currentGroupError: null,
+  // Current group weekly activity
+  currentGroupWeeklyActivity: null,
+  currentGroupWeeklyActivityLoading: false,
+  currentGroupWeeklyActivityError: null,
+  // Delete group
   deleteGroupLoading: false,
   deleteGroupError: null,
+  // Update group
+  currentGroupUpdating: false,
+  currentGroupUpdateError: null,
 };
 
 const groupsSlice = createSlice({
@@ -26,6 +38,7 @@ const groupsSlice = createSlice({
     clearGroupsError(state) {
       state.error = null;
       state.currentGroupError = null;
+      state.currentGroupUpdateError = null;
     },
   },
   extraReducers: (builder) => {
@@ -96,6 +109,33 @@ const groupsSlice = createSlice({
       .addCase(deleteGroup.pending, (state) => {
         state.deleteGroupLoading = true;
         state.deleteGroupError = null;
+      })
+
+      // fetchWeeklyActivity
+      .addCase(fetchWeeklyActivity.pending, (state) => {
+        state.currentGroupWeeklyActivityLoading = true;
+      })
+      .addCase(fetchWeeklyActivity.fulfilled, (state, action) => {
+        state.currentGroupWeeklyActivity = action.payload;
+        state.currentGroupWeeklyActivityLoading = false;
+      })
+      .addCase(fetchWeeklyActivity.rejected, (state, action) => {
+        state.currentGroupWeeklyActivityLoading = false;
+        state.currentGroupWeeklyActivityError =
+          action.payload ?? "Failed to fetch weekly activity";
+      })
+
+      // updateGroupName
+      .addCase(updateGroupName.pending, (state) => {
+        state.currentGroupUpdating = true;
+        state.currentGroupUpdateError = null;
+      })
+      .addCase(updateGroupName.fulfilled, (state) => {
+        state.currentGroupUpdating = false;
+      })
+      .addCase(updateGroupName.rejected, (state) => {
+        state.currentGroupUpdating = false;
+        state.currentGroupUpdateError = "Failed to update group name";
       });
   },
 });

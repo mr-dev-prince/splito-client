@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { BanknoteArrowUp, LogOut, Trash2, UserRoundPlus } from "lucide-react";
+import {
+  BanknoteArrowUp,
+  Edit,
+  LogOut,
+  Trash2,
+  UserRoundPlus,
+} from "lucide-react";
 import AddMemberModal from "./add-member-modal";
 import AddExpenseModal from "./add-expense-modal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -15,6 +21,7 @@ import GroupHeaderShimmer from "../shimmers/group-header-shimmer";
 import type { GroupDetails } from "@/redux/features/groups/group-types";
 import ConfirmationPopUp from "../utils/confirmation-pop-up";
 import { notifyError } from "@/lib/toast";
+import EditGroupModal from "./edit-group-modal";
 
 interface GroupHeaderComponentProps {
   data: GroupDetails | null;
@@ -61,8 +68,11 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
     useState<boolean>(false);
   const [isExitConfirmationOpen, setIsExitConfirmationOpen] =
     useState<boolean>(false);
+  const [isEditGroupModalOpen, setIsEditGroupModalOpen] =
+    useState<boolean>(false);
 
   const { deleteGroupLoading } = useAppSelector((state) => state.groups);
+  const { list } = useAppSelector((state) => state.members);
   const router = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -105,6 +115,14 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
         >
           <UserRoundPlus size={16} />
         </motion.button>
+        <motion.button
+          onClick={() => setIsEditGroupModalOpen(true)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700"
+        >
+          <Edit size={16} />
+        </motion.button>
         {data?.is_admin && (
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -144,6 +162,14 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
         onConfirm={() => {}}
         onCancel={() => setIsExitConfirmationOpen(false)}
         open={isExitConfirmationOpen}
+      />
+      <EditGroupModal
+        open={isEditGroupModalOpen}
+        onClose={() => setIsEditGroupModalOpen(false)}
+        groupName={data?.name || ""}
+        groupId={data?.id || 0}
+        members={list}
+        onRemoveMember={() => {}}
       />
     </div>
   );

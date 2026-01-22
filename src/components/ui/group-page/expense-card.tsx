@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trash2 } from "lucide-react";
+import { Trash2, User } from "lucide-react";
 import { motion } from "motion/react";
 import type { ExpenseType } from "@/redux/features/expenses/expense-type";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -41,8 +41,13 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ data }) => {
             </span>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-800">{data.title}</p>
-            <p className="text-xs text-gray-500">Added by {data.payer_name}</p>
+            <p className="text-sm font-medium text-gray-800 capitalize">
+              {data.title}
+            </p>
+            <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
+              <User size={12} color="green" />
+              <p>{data.payer_name}</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-6">

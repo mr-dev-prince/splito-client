@@ -15,7 +15,6 @@ const Expenses: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { list, loading, error } = useAppSelector((state) => state.expenses);
-  console.log(list);
   const { isSignedIn, isLoaded } = useAuth();
   const groupId = getGroupIdFromPath(window.location.pathname);
 
