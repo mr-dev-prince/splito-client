@@ -41,7 +41,7 @@ const Stats: React.FC = () => {
       ].map((stat, i) => (
         <div
           key={i}
-          className="rounded-2xl border border-gray-800 bg-[#1A1C1E] p-4"
+          className="rounded-xl border border-gray-800 bg-[#1A1C1E] p-4"
         >
           <stat.icon size={18} className={`${stat.color} mb-2`} />
           <p className="text-2xl font-bold text-white">{stat.value}</p>

@@ -37,7 +37,7 @@ const ConfirmationPopUp: React.FC<ConfirmationPopUpProps> = ({
       role="dialog"
       aria-modal="true"
     >
-      <div className="animate-in fade-in zoom-in w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all duration-200">
+      <div className="animate-in fade-in zoom-in w-full max-w-sm transform overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all duration-200">
         <div className="flex flex-col items-center text-center">
           {variant === "danger" && (
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">

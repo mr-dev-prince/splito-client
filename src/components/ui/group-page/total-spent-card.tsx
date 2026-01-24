@@ -8,7 +8,7 @@ interface TotalSpentCardProps {
 export const TotalSpentCard: React.FC<TotalSpentCardProps> = ({ amount }) => (
   <BaseCard accentColor="blue">
     <div className="flex items-center justify-between">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 ring-4 ring-blue-50/30">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-4 ring-blue-50/30">
         <Wallet size={22} />
       </div>
       <span className="rounded-full bg-blue-100/50 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-blue-700 uppercase">

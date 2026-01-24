@@ -36,7 +36,7 @@ const ExpensePlansTab: React.FC = () => {
   const totalSpent = mockPlans.reduce((a, b) => a + b.spent, 0);
 
   return (
-    <div className="h-screen w-full space-y-6 rounded-4xl bg-white p-6 shadow-2xl">
+    <div className="h-screen w-full space-y-6 rounded-xl bg-white p-6 shadow-2xl">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-800">Expense Plans</h2>
         <motion.button
@@ -80,7 +80,7 @@ const ExpensePlansTab: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.01 }}
-              className="rounded-2xl bg-white p-5 shadow-md shadow-blue-100"
+              className="rounded-xl bg-white p-5 shadow-md shadow-blue-100"
             >
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="font-semibold text-gray-800">{plan.name}</h3>
@@ -121,7 +121,7 @@ const ExpensePlansTab: React.FC = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+              className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
             >
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-800">
@@ -171,7 +171,7 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ icon: Icon, label, value }) => (
   <motion.div
     whileHover={{ y: -2 }}
-    className="flex items-center gap-4 rounded-2xl bg-linear-to-b from-blue-50 to-gray-50 p-4 shadow-md shadow-blue-100"
+    className="flex items-center gap-4 rounded-xl bg-linear-to-b from-blue-50 to-gray-50 p-4 shadow-md shadow-blue-100"
   >
     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
       <Icon size={18} />

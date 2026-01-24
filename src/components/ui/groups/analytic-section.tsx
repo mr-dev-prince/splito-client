@@ -1,60 +1,129 @@
-import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { ChartPie, Eye, EyeOff } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, TrendingUp } from "lucide-react";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import React, { useState } from "react";
+
 import type { Variants } from "motion/react";
 
+// --- Design Tokens ---
+const COLORS = ["#6366f1", "#8b5cf6", "#ec4899", "#f43f5e"];
+const GRADIENT = "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)";
+
+interface ChartDataItem {
+  name: string;
+  value: number;
+  [key: string]: string | number;
+}
+
 const containerVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.25,
-      ease: "easeOut",
-      staggerChildren: 0.08,
-    },
+    transition: { staggerChildren: 0.1 },
   },
-  exit: {
-    opacity: 0,
-    y: -8,
-    transition: { duration: 0.2, ease: "easeIn" },
-  },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 10, scale: 0.98 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { duration: 0.25, ease: "easeOut" },
+    transition: { type: "spring", stiffness: 300, damping: 24 },
   },
 };
 
-const groupData = [
-  { name: "Goa Trip", value: 4200 },
-  { name: "Flatmates", value: 2800 },
-  { name: "Office Lunch", value: 1500 },
-];
+// --- Sub-Components ---
 
-const categoryData = [
-  { name: "Food", value: 3500 },
-  { name: "Travel", value: 3000 },
-  { name: "Rent", value: 2000 },
-  { name: "Misc", value: 1000 },
-];
-
-const COLORS = ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"]; // blue shades
-
-const StatCard = ({ label, value }: { label: string; value: string }) => (
+const StatCard = ({
+  label,
+  value,
+  trend,
+}: {
+  label: string;
+  value: string;
+  trend?: string;
+}) => (
   <motion.div
+    variants={itemVariants}
     whileHover={{ y: -4 }}
-    transition={{ duration: 0.2 }}
-    className="rounded-2xl bg-white p-5 shadow-sm hover:shadow-md"
+    className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6"
   >
-    <p className="text-sm text-gray-500">{label}</p>
-    <p className="mt-2 text-2xl font-semibold text-gray-800">₹{value}</p>
+    <div className="relative z-10">
+      <p className="text-xs font-bold tracking-wider text-gray-400 uppercase">
+        {label}
+      </p>
+      <div className="mt-3 flex items-baseline gap-2">
+        <h3 className="text-3xl font-black text-gray-900">₹{value}</h3>
+        {trend && (
+          <span className="flex items-center text-xs font-bold text-emerald-500">
+            <ArrowUpRight size={14} /> {trend}
+          </span>
+        )}
+      </div>
+    </div>
+    {/* Subtle Background Accent */}
+    <div className="absolute -right-4 -bottom-4 h-24 w-24 rounded-full bg-indigo-50/50" />
+  </motion.div>
+);
+
+const ChartCard = ({
+  title,
+  data,
+}: {
+  title: string;
+  data: ChartDataItem[];
+}) => (
+  <motion.div
+    variants={itemVariants}
+    className="flex flex-col rounded-xl border border-gray-200 bg-white p-6"
+  >
+    <div className="mb-4 flex items-center justify-between">
+      <p className="text-sm font-bold tracking-tight text-gray-800">{title}</p>
+      <div className="h-2 w-2 animate-pulse rounded-full bg-indigo-500" />
+    </div>
+    <div className="h-52 w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={data}
+            innerRadius={65}
+            outerRadius={80}
+            paddingAngle={8}
+            dataKey="value"
+            stroke="none"
+          >
+            {data.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+                radius={10}
+              />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{
+              borderRadius: "16px",
+              border: "none",
+              boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+    <div className="mt-4 grid grid-cols-2 gap-2">
+      {data.map((item, i) => (
+        <div key={item.name} className="flex items-center gap-2">
+          <div
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: COLORS[i % COLORS.length] }}
+          />
+          <span className="text-[10px] font-semibold tracking-tighter text-gray-500 uppercase">
+            {item.name}
+          </span>
+        </div>
+      ))}
+    </div>
   </motion.div>
 );
 
@@ -62,94 +131,86 @@ const AnalyticsSection: React.FC = () => {
   const [showAnalytics, setShowAnalytics] = useState(true);
 
   return (
-    <div className="space-y-4">
-      <div className="border-accent flex items-center justify-between rounded-2xl bg-white p-4">
-        <div className="flex items-center justify-center gap-2">
-          <ChartPie />
-          <h1 className="text-2xl font-medium text-gray-800">
-            Group Analytics
-          </h1>
-        </div>
-        <button onClick={() => setShowAnalytics((prev) => !prev)}>
-          {showAnalytics ? <Eye color="#2663EB" /> : <EyeOff color="red" />}
-        </button>
-      </div>
-      <AnimatePresence mode="wait">
-        {showAnalytics && (
-          <motion.div
-            key="analytics"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="grid grid-cols-4 gap-4 rounded-2xl border bg-white p-3"
+    <div className="h-fit rounded-xl bg-[#f8fafc] p-6 font-sans text-gray-900">
+      <div className="mx-auto space-y-6">
+        <header className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-black tracking-tight text-gray-900">
+              Group Analytics
+            </h1>
+            <p className="text-sm font-medium text-gray-500">
+              Insights for your shared expenses
+            </p>
+          </div>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowAnalytics((p) => !p)}
+            className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-sm font-bold shadow-sm ring-1 ring-gray-200 transition-all hover:bg-gray-50"
           >
-            <motion.div variants={itemVariants}>
-              <StatCard label="Total expense this month" value="5,600" />
-            </motion.div>
+            {showAnalytics ? (
+              <>
+                <EyeOff size={16} /> Hide
+              </>
+            ) : (
+              <>
+                <Eye size={16} /> Show Analytics
+              </>
+            )}
+          </motion.button>
+        </header>
 
-            <motion.div variants={itemVariants}>
-              <StatCard label="Overall expense" value="12,300" />
-            </motion.div>
-
+        <AnimatePresence mode="wait">
+          {showAnalytics && (
             <motion.div
-              variants={itemVariants}
-              className="rounded-2xl border bg-white p-5 shadow-sm"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="grid grid-cols-1 gap-6 md:grid-cols-12"
             >
-              <p className="mb-4 text-sm font-medium text-gray-700">
-                Group-wise expense
-              </p>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={groupData}
-                      dataKey="value"
-                      nameKey="name"
-                      innerRadius={60}
-                      outerRadius={90}
-                      paddingAngle={4}
-                    >
-                      {groupData.map((_, i) => (
-                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+              <motion.div variants={itemVariants} className="md:col-span-4">
+                <div
+                  className="flex h-full flex-col justify-between rounded-3xl p-8 text-white shadow-xl"
+                  style={{ background: GRADIENT }}
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md">
+                    <TrendingUp size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium tracking-widest uppercase opacity-80">
+                      Total Expense
+                    </p>
+                    <h2 className="mt-1 text-4xl font-black">₹17,900</h2>
+                    <div className="mt-4 inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase backdrop-blur-sm">
+                      +12% from last month
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:col-span-8">
+                <StatCard label="Monthly Spend" value="5,600" trend="8.4%" />
+                <StatCard label="Saved This Month" value="2,100" />
+                <ChartCard
+                  title="Top Groups"
+                  data={[
+                    { name: "Goa", value: 4200 },
+                    { name: "Flat", value: 2800 },
+                    { name: "Office", value: 1500 },
+                  ]}
+                />
+                <ChartCard
+                  title="Categories"
+                  data={[
+                    { name: "Food", value: 3500 },
+                    { name: "Travel", value: 3000 },
+                    { name: "Rent", value: 2000 },
+                  ]}
+                />
               </div>
             </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="rounded-2xl border bg-white p-5 shadow-sm"
-            >
-              <p className="mb-4 text-sm font-medium text-gray-700">
-                Expense categories
-              </p>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      dataKey="value"
-                      nameKey="name"
-                      innerRadius={60}
-                      outerRadius={90}
-                      paddingAngle={4}
-                    >
-                      {categoryData.map((_, i) => (
-                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

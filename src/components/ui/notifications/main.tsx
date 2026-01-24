@@ -34,7 +34,7 @@ const mockNotifications: Notification[] = [
 
 const NotificationsTab: React.FC = () => {
   return (
-    <div className="h-screen w-full rounded-2xl bg-white p-6 shadow-2xl">
+    <div className="h-screen w-full rounded-xl bg-white p-6 shadow-2xl">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">

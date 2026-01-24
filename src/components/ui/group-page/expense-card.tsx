@@ -16,9 +16,11 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ data }) => {
   const { loading } = useAppSelector((state) => state.expenses);
   const dispatch = useAppDispatch();
 
-  const handleDeleteExpense = () => {
+  const handleDeleteExpense = async () => {
     try {
-      dispatch(deleteExpense({ expenseId: data.id, groupId: data.group_id }));
+      await dispatch(
+        deleteExpense({ expenseId: data.id, groupId: data.group_id }),
+      );
       notifySuccess("Expense deleted successfully");
     } catch (error) {
       if (error instanceof Error) {
@@ -32,7 +34,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ data }) => {
       <motion.div
         key={data.id}
         whileHover={{ y: -2 }}
-        className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm"
+        className="flex items-center justify-between rounded-xl bg-white p-4 border border-gray-200"
       >
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-full bg-blue-100">

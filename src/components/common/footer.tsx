@@ -116,7 +116,7 @@ const Footer = () => {
             ))}
           </div>
           <div className="lg:col-span-4">
-            <div className="rounded-2xl border border-white/5 bg-white/2 p-8 backdrop-blur-sm">
+            <div className="rounded-xl border border-white/5 bg-white/2 p-8 backdrop-blur-sm">
               <p className="mb-2 text-lg font-semibold text-white">
                 Ready to split?
               </p>

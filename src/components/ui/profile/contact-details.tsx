@@ -11,7 +11,7 @@ const ContactDetails: React.FC = () => {
   };
   return (
     <motion.div variants={fadeInUp} className="space-y-6 md:col-span-2">
-      <div className="rounded-3xl border border-gray-800 bg-[#1A1C1E] p-6">
+      <div className="rounded-xl border border-gray-800 bg-[#1A1C1E] p-6">
         <h3 className="mb-6 text-lg font-bold text-white">
           Contact Information
         </h3>

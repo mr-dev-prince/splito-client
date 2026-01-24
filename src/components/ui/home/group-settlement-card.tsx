@@ -25,7 +25,7 @@ const GroupSettlementCard: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       whileHover={{ y: -4 }}
-      className="relative w-full cursor-pointer rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-100"
+      className="relative w-full cursor-pointer rounded-xl bg-white p-6 shadow-xl ring-1 ring-gray-100"
     >
       <div className="mb-4 flex items-center justify-between">
         <div>

@@ -43,7 +43,7 @@ const COLORS = ["#2563EB", "#60A5FA", "#93C5FD", "#CBD5E1"];
 // ---------------- Component ----------------
 const AnalyticsTab: React.FC = () => {
   return (
-    <div className="mx-auto w-full space-y-6 rounded-4xl bg-white p-6 shadow-2xl">
+    <div className="mx-auto w-full space-y-6 rounded-xl bg-white p-6 shadow-2xl">
       <h2 className="text-xl font-semibold text-gray-800">Analytics</h2>
 
       {/* Quick Stats */}
@@ -122,7 +122,7 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ label, value, icon: Icon }) => (
   <motion.div
     whileHover={{ y: -2 }}
-    className="flex items-center gap-4 rounded-2xl bg-linear-to-b from-blue-50 to-gray-50 p-4 shadow-md shadow-blue-100"
+    className="flex items-center gap-4 rounded-xl bg-linear-to-b from-blue-50 to-gray-50 p-4 shadow-md shadow-blue-100"
   >
     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
       <Icon size={18} />
@@ -148,7 +148,7 @@ const ChartCard: React.FC<ChartCardProps> = ({
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    className={`rounded-2xl bg-white p-5 shadow-lg shadow-blue-100 ${className}`}
+    className={`rounded-xl bg-white p-5 shadow-lg shadow-blue-100 ${className}`}
   >
     <h3 className="mb-3 text-sm font-semibold text-gray-700">{title}</h3>
     {children}

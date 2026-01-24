@@ -18,7 +18,7 @@ const HeroSection: React.FC = () => {
       <div className="rounded-b-3xl border-x border-b border-gray-800 bg-[#1A1C1E] p-6 pt-0">
         <div className="-mt-12 flex flex-col items-end gap-6 pt-3 md:flex-row md:items-center">
           <div className="group relative">
-            <div className="h-32 w-32 overflow-hidden rounded-3xl border-4 border-[#0F1113] bg-gray-800 shadow-2xl">
+            <div className="h-32 w-32 overflow-hidden rounded-xl border-4 border-[#0F1113] bg-gray-800 shadow-2xl">
               <img
                 src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
                 alt="User Avatar"

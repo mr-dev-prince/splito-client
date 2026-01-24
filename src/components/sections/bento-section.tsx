@@ -38,7 +38,7 @@ const BentoSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="col-span-6 row-span-3 rounded-2xl bg-white p-8 shadow-sm"
+          className="col-span-6 row-span-3 rounded-xl bg-white p-8 shadow-sm"
         >
           <p className="text-sm font-medium text-blue-600">
             You stay in control
@@ -57,7 +57,7 @@ const BentoSection: React.FC = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           initial={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.5 }}
-          className="col-span-6 row-span-3 rounded-2xl bg-linear-to-br from-blue-50 to-white p-6 shadow-sm"
+          className="col-span-6 row-span-3 rounded-xl bg-linear-to-br from-blue-50 to-white p-6 shadow-sm"
         >
           <p className="text-sm font-medium text-blue-600">Spending insights</p>
           <h3 className="mt-2 text-2xl font-semibold text-slate-900">
@@ -72,7 +72,7 @@ const BentoSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="col-span-5 row-span-3 rounded-2xl bg-white p-6 shadow-sm"
+          className="col-span-5 row-span-3 rounded-xl bg-white p-6 shadow-sm"
         >
           <p className="text-sm font-medium text-blue-600">Smart automation</p>
           <h3 className="mt-2 text-2xl font-semibold text-slate-900">
@@ -99,7 +99,7 @@ const BentoSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="col-span-7 row-span-3 overflow-hidden rounded-2xl bg-blue-600 p-6 text-white shadow-sm"
+          className="col-span-7 row-span-3 overflow-hidden rounded-xl bg-blue-600 p-6 text-white shadow-sm"
         >
           <p className="text-sm font-medium text-blue-200">Built for groups</p>
           <h3 className="mt-1 text-2xl font-semibold">

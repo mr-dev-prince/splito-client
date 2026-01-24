@@ -13,14 +13,14 @@ const Dash: React.FC = () => {
   };
 
   return (
-    <div className="h-fit rounded-4xl bg-white font-sans text-gray-100 shadow-2xl">
+    <div className="h-fit rounded-xl bg-white font-sans text-gray-100 shadow-2xl">
       <motion.div
         variants={containerVars}
         initial="initial"
         animate="animate"
         className="mx-auto space-y-6 p-6"
       >
-        <section className="relative overflow-hidden rounded-3xl bg-linear-to-br from-blue-600 to-blue-800 p-4 shadow-2xl shadow-blue-900/30">
+        <section className="relative overflow-hidden rounded-xl bg-linear-to-br from-blue-600 to-blue-800 p-4 shadow-2xl shadow-blue-900/30">
           <div className="relative z-10 flex flex-col items-end justify-between md:flex-row md:items-center">
             <div>
               <p className="text-sm font-medium tracking-wider text-blue-100/80 uppercase">

@@ -25,7 +25,7 @@ const GroupList: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex h-fit w-full gap-5 rounded-2xl border bg-white p-3">
+      <div className="flex h-fit w-full gap-5 rounded-xl border bg-white p-3">
         <ListWithSkeleton
           loading={loading}
           data={list}

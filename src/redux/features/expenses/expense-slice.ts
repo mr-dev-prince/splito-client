@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ExpensesState } from "./expense-type";
-import { createExpense, fetchExpenses } from "./expense-thunk";
+import {
+  createExpense,
+  deleteExpense,
+  fetchExpenses,
+  fetchMyExpenses,
+} from "./expense-thunk";
 
 const initialState: ExpensesState = {
   list: [],
   loading: false,
   error: null,
+  myExpenses: [],
+  myExpensesLoading: false,
+  myExpensesError: null,
 };
 
 const expenseSlice = createSlice({
@@ -45,15 +53,30 @@ const expenseSlice = createSlice({
       })
 
       // deleteExpense
-      .addCase("expenses/deleteExpense/pending", (state) => {
+      .addCase(deleteExpense.pending, (state) => {
         state.loading = true;
       })
-      .addCase("expenses/deleteExpense/fulfilled", (state) => {
+      .addCase(deleteExpense.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase("expenses/deleteExpense/rejected", (state) => {
+      .addCase(deleteExpense.rejected, (state, action) => {
+        console.log("delete-expense -> ", action.payload);
         state.loading = false;
         state.error = "Failed to delete expense";
+      })
+
+      // fetch my expenses
+      .addCase(fetchMyExpenses.pending, (state) => {
+        state.myExpensesLoading = true;
+        state.myExpensesError = null;
+      })
+      .addCase(fetchMyExpenses.fulfilled, (state, action) => {
+        state.myExpensesLoading = false;
+        state.myExpenses = action.payload;
+      })
+      .addCase(fetchMyExpenses.rejected, (state, action) => {
+        state.myExpensesLoading = false;
+        state.myExpensesError = action.payload ?? "Something went wrong";
       });
   },
 });

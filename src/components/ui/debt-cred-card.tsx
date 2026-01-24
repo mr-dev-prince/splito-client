@@ -31,7 +31,7 @@ const DebtCredCard: React.FC<DebtCredCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4 }}
-      className="hidden h-fit w-64 flex-col overflow-hidden rounded-2xl bg-white/20 shadow-lg backdrop-blur-xs lg:flex"
+      className="hidden h-fit w-64 flex-col overflow-hidden rounded-xl bg-white/20 shadow-lg backdrop-blur-xs lg:flex"
     >
       <div className="flex items-center gap-3 bg-blue-500 p-2">
         <img src={user} alt="" className="h-8 rounded-lg" />

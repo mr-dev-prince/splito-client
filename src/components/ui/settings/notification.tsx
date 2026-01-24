@@ -13,7 +13,7 @@ interface NotificationProps {
 
 const Notification: React.FC<NotificationProps> = ({ settings, toggle }) => {
   return (
-    <section className="rounded-3xl border border-gray-800 bg-[#1A1C1E] p-6 md:col-span-2">
+    <section className="rounded-xl border border-gray-800 bg-[#1A1C1E] p-6 md:col-span-2">
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">

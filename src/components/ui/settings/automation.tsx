@@ -14,7 +14,7 @@ interface AutomationProps {
 
 const Automation: React.FC<AutomationProps> = ({ settings, toggle }) => {
   return (
-    <section className="space-y-6 rounded-3xl border border-gray-800 bg-[#1A1C1E] p-4">
+    <section className="space-y-6 rounded-xl border border-gray-800 bg-[#1A1C1E] p-4">
       <div className="mb-2 flex items-center gap-3">
         <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
           <Zap size={20} />

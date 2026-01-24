@@ -12,7 +12,7 @@ const BaseCard: React.FC<{
   };
 
   return (
-    <div className="group relative cursor-default overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+    <div className="group relative cursor-default overflow-hidden rounded-xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.03)]">
       <div
         className={`absolute -top-4 -right-4 h-24 w-24 rounded-full transition-transform duration-500 group-hover:scale-150 ${colors[accentColor].split(" ")[0]}`}
       />

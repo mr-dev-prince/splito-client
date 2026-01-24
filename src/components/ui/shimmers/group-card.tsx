@@ -2,7 +2,7 @@ import React from "react";
 
 const GroupCardShimmer: React.FC = () => {
   return (
-    <div className="relative h-fit w-56 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
+    <div className="relative h-fit w-56 rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
       <div className="flex animate-pulse flex-col gap-5">
         {/* Header */}
         <div className="flex items-center gap-3">

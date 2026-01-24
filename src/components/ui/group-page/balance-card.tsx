@@ -9,7 +9,7 @@ export const PersonalBalanceCard = ({ balance }: { balance: number }) => {
     <BaseCard accentColor={accent}>
       <div className="flex items-center justify-between">
         <div
-          className={`flex h-12 w-12 items-center justify-center rounded-2xl ring-4 ${isPositive ? "bg-emerald-50 text-emerald-600 ring-emerald-50/30" : "bg-rose-50 text-rose-600 ring-rose-50/30"}`}
+          className={`flex h-12 w-12 items-center justify-center rounded-xl ring-4 ${isPositive ? "bg-emerald-50 text-emerald-600 ring-emerald-50/30" : "bg-rose-50 text-rose-600 ring-rose-50/30"}`}
         >
           {isPositive ? (
             <ArrowUpRight size={22} />

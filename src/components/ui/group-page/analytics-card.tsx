@@ -34,7 +34,7 @@ export const AnalyticsPreviewCard = () => {
   return (
     <BaseCard accentColor="indigo">
       <div className="flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 ring-4 ring-indigo-50/30">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-4 ring-indigo-50/30">
           <PieChart size={22} />
         </div>
         <div className="flex items-center gap-1 text-emerald-500">

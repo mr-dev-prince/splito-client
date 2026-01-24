@@ -105,7 +105,7 @@ const ActivityPage: React.FC = () => {
   return (
     <div className="min-h-screen space-y-4 bg-gray-50 p-6">
       {/* Header */}
-      <div className="flex items-center justify-between rounded-2xl border bg-white p-3 shadow-2xl">
+      <div className="flex items-center justify-between rounded-xl border bg-white p-3 shadow-2xl">
         <h1 className="text-2xl font-semibold text-gray-800">Activity</h1>
         <p className="text-sm text-gray-500">
           Everything that happened recently
@@ -113,7 +113,7 @@ const ActivityPage: React.FC = () => {
       </div>
 
       {/* Activity Feed */}
-      <div className="space-y-3 rounded-2xl bg-white p-2 shadow-sm">
+      <div className="space-y-3 rounded-xl bg-white p-2 shadow-sm">
         {activities.map((activity) => (
           <ActivityRow key={activity.id} activity={activity} />
         ))}

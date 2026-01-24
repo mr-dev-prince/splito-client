@@ -27,7 +27,7 @@ const SettingsTab: React.FC = () => {
   };
 
   return (
-    <div className="h-screen space-y-6 rounded-4xl border bg-white p-4 shadow-2xl">
+    <div className="h-screen space-y-6 rounded-xl border bg-white p-4 shadow-2xl">
       <header className="mb-4">
         <h2 className="text-3xl font-bold tracking-tight text-blue-950">
           System Settings
@@ -43,7 +43,7 @@ const SettingsTab: React.FC = () => {
       </div>
 
       <div className="flex justify-end pt-4">
-        <button className="rounded-2xl bg-blue-600 px-8 py-3 font-bold text-white shadow-lg shadow-blue-900/40 transition-all hover:bg-blue-500 active:scale-95">
+        <button className="rounded-xl bg-blue-600 px-8 py-3 font-bold text-white shadow-lg shadow-blue-900/40 transition-all hover:bg-blue-500 active:scale-95">
           Apply Configuration
         </button>
       </div>

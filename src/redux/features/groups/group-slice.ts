@@ -53,6 +53,7 @@ const groupsSlice = createSlice({
         state.list = action.payload;
       })
       .addCase(fetchGroups.rejected, (state, action) => {
+        console.log("action.payload -->", action.payload);
         state.loading = false;
         state.error = action.payload ?? "Something went wrong";
       })

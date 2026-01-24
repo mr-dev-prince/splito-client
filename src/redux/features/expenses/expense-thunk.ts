@@ -69,3 +69,20 @@ export const deleteExpense = createAsyncThunk<
     }
   },
 );
+
+export const fetchMyExpenses = createAsyncThunk<
+  ExpenseType[],
+  void,
+  { rejectValue: string | undefined }
+>("expenses/fetchMyExpenses", async (_, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`/expenses/my-expenses`);
+    return res.data as ExpenseType[];
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});

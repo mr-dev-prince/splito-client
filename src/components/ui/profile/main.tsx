@@ -11,7 +11,7 @@ const ProfileTab: React.FC = () => {
       initial="initial"
       animate="animate"
       variants={{ animate: { transition: { staggerChildren: 0.1 } } }}
-      className="w-full space-y-8 rounded-4xl bg-white p-6 pb-20 shadow-2xl"
+      className="w-full space-y-8 rounded-xl bg-white p-6 pb-20 shadow-2xl"
     >
       <HeroSection />
       <Stats />

@@ -36,7 +36,7 @@ const AuthPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="z-999 w-full max-w-md rounded-3xl border bg-white p-6 shadow-lg ring-1 ring-gray-100"
+        className="z-999 w-full max-w-md rounded-xl border bg-white p-6 shadow-lg ring-1 ring-gray-100"
       >
         <div className="mb-4 text-center">
           <Logo />

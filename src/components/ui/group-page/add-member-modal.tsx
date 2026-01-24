@@ -76,7 +76,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-100"
+            className="fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-xl ring-1 ring-gray-100"
           >
             <div className="mb-5 flex items-start justify-between">
               <div className="flex items-center gap-3">

@@ -29,7 +29,7 @@ const Pending: React.FC = () => {
         {SETTLEMENTS.map((person) => (
           <div
             key={person.id}
-            className="flex items-center justify-between rounded-2xl border border-gray-800 bg-[#1A1C1E] p-4"
+            className="flex items-center justify-between rounded-xl border border-gray-800 bg-[#1A1C1E] p-4"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-tr from-gray-700 to-gray-600 text-sm font-bold">

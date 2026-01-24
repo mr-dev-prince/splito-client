@@ -40,7 +40,7 @@ const Stats: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
           whileHover={{ y: -4 }}
-          className="h-full cursor-pointer rounded-3xl bg-white p-4 shadow-lg lg:w-1/2"
+          className="h-full cursor-pointer rounded-xl bg-white p-4 shadow-lg lg:w-1/2"
         >
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 rounded-md bg-white px-3 py-1.5 shadow-sm">

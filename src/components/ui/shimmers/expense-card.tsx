@@ -2,7 +2,7 @@ import React from "react";
 
 const ExpenseCardShimmer: React.FC = () => {
   return (
-    <div className="flex animate-pulse items-center justify-between rounded-2xl bg-white p-4 shadow-sm">
+    <div className="flex animate-pulse items-center justify-between rounded-xl bg-white p-4 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-200">
           <div className="animate-shimmer absolute inset-0 -translate-x-full bg-linear-to-r from-gray-200 via-gray-300 to-gray-200" />

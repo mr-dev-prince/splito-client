@@ -28,7 +28,7 @@ const ExpenseModesSection: React.FC = () => {
             whileHover={{ y: -6 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
-            className="group relative rounded-2xl bg-white p-8 shadow-md"
+            className="group relative rounded-xl bg-white p-8 shadow-md"
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <Wallet />
@@ -50,7 +50,7 @@ const ExpenseModesSection: React.FC = () => {
               Track personal spending
               <ArrowRight size={16} />
             </motion.button>
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-blue-50/40 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-br from-blue-50/40 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -63,7 +63,7 @@ const ExpenseModesSection: React.FC = () => {
               damping: 16,
               delay: 0.05,
             }}
-            className="group relative rounded-2xl bg-blue-600 p-8 text-white shadow-md"
+            className="group relative rounded-xl bg-blue-600 p-8 text-white shadow-md"
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
               <Users />
@@ -83,7 +83,7 @@ const ExpenseModesSection: React.FC = () => {
               Manage group splits
               <ArrowRight size={16} />
             </motion.button>
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
           </motion.div>
         </div>
       </div>

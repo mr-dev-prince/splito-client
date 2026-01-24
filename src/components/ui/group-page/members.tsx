@@ -20,7 +20,7 @@ const Members: React.FC = () => {
   }, [dispatch, isLoaded, isSignedIn, groupId]);
 
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-gray-200 bg-white p-4">
       <p className="mb-3 text-sm font-semibold text-gray-800">Members</p>
       <ErrorOverlay
         error={error}

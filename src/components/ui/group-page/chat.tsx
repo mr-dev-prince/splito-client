@@ -3,7 +3,7 @@ import React from "react";
 
 const Chats: React.FC = () => {
   return (
-    <div className="flex h-105 flex-col rounded-2xl bg-white shadow-sm">
+    <div className="flex h-105 flex-col rounded-xl border border-gray-200 bg-white">
       <div className="border-b p-4">
         <p className="text-sm font-semibold text-gray-800">Group chat</p>
       </div>

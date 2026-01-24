@@ -91,7 +91,7 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
   };
 
   return (
-    <div className="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-md sm:flex-row sm:items-center sm:justify-between">
+    <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h1 className="text-2xl font-semibold text-gray-800">{data?.name}</h1>
         <p className="text-sm text-gray-500">

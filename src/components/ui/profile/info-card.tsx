@@ -8,7 +8,7 @@ const InfoCard: React.FC = () => {
   };
   return (
     <motion.div variants={fadeInUp} className="space-y-6">
-      <div className="rounded-3xl border border-blue-500/20 bg-blue-600/5 p-6">
+      <div className="rounded-xl border border-blue-500/20 bg-blue-600/5 p-6">
         <h4 className="mb-2 text-sm font-bold text-blue-400">Pro Membership</h4>
         <p className="mb-4 text-xs leading-relaxed text-gray-500">
           You have access to unlimited groups and receipt scanning.
