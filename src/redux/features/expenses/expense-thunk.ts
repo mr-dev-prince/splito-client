@@ -6,6 +6,7 @@ import {
 } from "./expense-type";
 import { api } from "@/lib/api";
 import { fetchGroupData } from "../groups/group-thunks";
+import axios from "axios";
 
 export const fetchExpenses = createAsyncThunk<
   ExpenseType[],
@@ -73,16 +74,16 @@ export const deleteExpense = createAsyncThunk<
 export const fetchMyExpenses = createAsyncThunk<
   ExpenseType[],
   void,
-  { rejectValue: string | undefined }
+  { rejectValue: string }
 >("expenses/fetchMyExpenses", async (_, { rejectWithValue }) => {
   try {
     const res = await api.get(`/expenses/my-expenses`);
-    return res.data as ExpenseType[];
-  } catch (error) {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
+    return res.data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      return rejectWithValue(err.response?.data?.detail ?? "Server error");
     }
-    return rejectWithValue(message);
+
+    return rejectWithValue("Unexpected error");
   }
 });

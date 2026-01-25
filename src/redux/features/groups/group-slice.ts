@@ -1,14 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
 import type { GroupDetails, GroupsState } from "./group-types";
 import {
   addGroupMember,
   createGroup,
   deleteGroup,
+  fetchAdminGroupSettlements,
   fetchGroupData,
   fetchGroups,
   fetchWeeklyActivity,
   updateGroupName,
 } from "./group-thunks";
+
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: GroupsState = {
   // All groups
@@ -29,6 +31,10 @@ const initialState: GroupsState = {
   // Update group
   currentGroupUpdating: false,
   currentGroupUpdateError: null,
+  // Admin group settlements
+  adminGroupSettlements: [],
+  adminGroupSettlementsLoading: false,
+  adminGroupSettlementsError: null,
 };
 
 const groupsSlice = createSlice({
@@ -53,7 +59,6 @@ const groupsSlice = createSlice({
         state.list = action.payload;
       })
       .addCase(fetchGroups.rejected, (state, action) => {
-        console.log("action.payload -->", action.payload);
         state.loading = false;
         state.error = action.payload ?? "Something went wrong";
       })
@@ -137,6 +142,21 @@ const groupsSlice = createSlice({
       .addCase(updateGroupName.rejected, (state) => {
         state.currentGroupUpdating = false;
         state.currentGroupUpdateError = "Failed to update group name";
+      })
+
+      // fetchAdminGroupSettlments
+      .addCase(fetchAdminGroupSettlements.pending, (state) => {
+        state.adminGroupSettlementsLoading = true;
+        state.adminGroupSettlementsError = null;
+      })
+      .addCase(fetchAdminGroupSettlements.fulfilled, (state, action) => {
+        state.adminGroupSettlementsLoading = false;
+        state.adminGroupSettlements = action.payload;
+      })
+      .addCase(fetchAdminGroupSettlements.rejected, (state, action) => {
+        state.adminGroupSettlementsLoading = false;
+        state.adminGroupSettlementsError =
+          action.payload ?? "Failed to fetch group settlements";
       });
   },
 });

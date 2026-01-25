@@ -1,5 +1,5 @@
-import React from "react";
 import NoData from "./no-data";
+import React from "react";
 
 interface ListWithSkeletonProps<T> {
   loading: boolean;
@@ -20,6 +20,7 @@ function ListWithSkeleton<T>({
   getKey,
   vertical = true,
 }: ListWithSkeletonProps<T>) {
+  
   if (loading) {
     return (
       <div className={vertical ? "space-y-3" : "flex space-x-3"}>

@@ -1,11 +1,13 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "@/lib/api";
 import type {
+  AdminGroupSettlementResponse,
   Group,
   GroupMember,
   UpdateGroupNameResponse,
   WeeklyActivityResponse,
 } from "./group-types";
+
+import { api } from "@/lib/api";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchGroups = createAsyncThunk<
   Group[],
@@ -141,6 +143,23 @@ export const updateGroupName = createAsyncThunk<
   try {
     const res = await api.patch(`/groups/${groupId}`, { name });
     return res.data as UpdateGroupNameResponse;
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
+export const fetchAdminGroupSettlements = createAsyncThunk<
+  AdminGroupSettlementResponse[],
+  void,
+  { rejectValue: string | undefined }
+>("groups/fetchAdminGroupSettlments", async (_, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`/settements/admin-groups`);
+    return res.data as AdminGroupSettlementResponse[];
   } catch (error) {
     let message;
     if (error instanceof Error) {

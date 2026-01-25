@@ -1,11 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { ExpensesState } from "./expense-type";
 import {
   createExpense,
   deleteExpense,
   fetchExpenses,
   fetchMyExpenses,
 } from "./expense-thunk";
+
+import type { ExpensesState } from "./expense-type";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: ExpensesState = {
   list: [],
@@ -75,6 +76,7 @@ const expenseSlice = createSlice({
         state.myExpenses = action.payload;
       })
       .addCase(fetchMyExpenses.rejected, (state, action) => {
+        console.log("fetch-my-expenses -> ", action.payload);
         state.myExpensesLoading = false;
         state.myExpensesError = action.payload ?? "Something went wrong";
       });

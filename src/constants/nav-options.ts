@@ -22,7 +22,7 @@ export const primaryNav: INav[] = [
   },
   {
     id: "activity",
-    label: "Activity",
-    href: "/activity",
+    label: "Settlements",
+    href: "/settlements",
   },
 ];

@@ -1,6 +1,6 @@
+import { BASE_URL } from "./env-exports";
 // lib/api.ts
 import axios from "axios";
-import { BASE_URL } from "./env-exports";
 import { getAuthToken } from "./auth-token";
 
 export const api = axios.create({

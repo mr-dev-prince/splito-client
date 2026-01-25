@@ -32,6 +32,10 @@ export interface GroupsState {
 
   currentGroupUpdating: boolean;
   currentGroupUpdateError: string | null;
+
+  adminGroupSettlements: AdminGroupSettlementResponse[];
+  adminGroupSettlementsLoading: boolean;
+  adminGroupSettlementsError: string | null;
 }
 
 export interface GroupMember {
@@ -51,4 +55,19 @@ export interface WeeklyActivityResponse {
 
 export interface UpdateGroupNameResponse {
   message: string;
+}
+
+export interface GroupSettlement {
+  from_member_id: number;
+  from_member_name: string;
+  to_member_id: number;
+  to_member_name: string;
+  amount: number;
+}
+
+export interface AdminGroupSettlementResponse {
+  group_id: number;
+  group_name: string;
+  total_members: number;
+  settlements: GroupSettlement[];
 }
