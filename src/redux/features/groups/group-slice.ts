@@ -4,6 +4,7 @@ import {
   createGroup,
   deleteGroup,
   fetchAdminGroupSettlements,
+  fetchGroupAnalytics,
   fetchGroupData,
   fetchGroups,
   fetchWeeklyActivity,
@@ -35,6 +36,10 @@ const initialState: GroupsState = {
   adminGroupSettlements: [],
   adminGroupSettlementsLoading: false,
   adminGroupSettlementsError: null,
+  // Group analytics
+  groupAnalytics: null,
+  groupAnalyticsLoading: false,
+  groupAnalyticsError: null,
 };
 
 const groupsSlice = createSlice({
@@ -157,6 +162,21 @@ const groupsSlice = createSlice({
         state.adminGroupSettlementsLoading = false;
         state.adminGroupSettlementsError =
           action.payload ?? "Failed to fetch group settlements";
+      })
+
+      // fetchGroupAnalytics
+      .addCase(fetchGroupAnalytics.pending, (state) => {
+        state.groupAnalyticsLoading = true;
+        state.groupAnalyticsError = null;
+      })
+      .addCase(fetchGroupAnalytics.fulfilled, (state, action) => {
+        state.groupAnalyticsLoading = false;
+        state.groupAnalytics = action.payload;
+      })
+      .addCase(fetchGroupAnalytics.rejected, (state, action) => {
+        state.groupAnalyticsLoading = false;
+        state.groupAnalyticsError =
+          action.payload ?? "Failed to fetch group analytics";
       });
   },
 });

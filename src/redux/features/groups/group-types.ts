@@ -36,6 +36,10 @@ export interface GroupsState {
   adminGroupSettlements: AdminGroupSettlementResponse[];
   adminGroupSettlementsLoading: boolean;
   adminGroupSettlementsError: string | null;
+
+  groupAnalytics: GroupAnalyticsResponse | null;
+  groupAnalyticsLoading: boolean;
+  groupAnalyticsError: string | null;
 }
 
 export interface GroupMember {
@@ -70,4 +74,17 @@ export interface AdminGroupSettlementResponse {
   group_name: string;
   total_members: number;
   settlements: GroupSettlement[];
+}
+
+export interface GroupAnalyticsResponse {
+  mtd_total: number;
+  lifetime_total: number;
+  top_groups: {
+    name: string;
+    amount: number;
+  }[];
+  top_months: {
+    period: string;
+    amount: number;
+  }[];
 }

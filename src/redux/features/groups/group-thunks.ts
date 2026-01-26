@@ -1,6 +1,7 @@
 import type {
   AdminGroupSettlementResponse,
   Group,
+  GroupAnalyticsResponse,
   GroupMember,
   UpdateGroupNameResponse,
   WeeklyActivityResponse,
@@ -160,6 +161,23 @@ export const fetchAdminGroupSettlements = createAsyncThunk<
   try {
     const res = await api.get(`/settements/admin-groups`);
     return res.data as AdminGroupSettlementResponse[];
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
+export const fetchGroupAnalytics = createAsyncThunk<
+  GroupAnalyticsResponse,
+  void,
+  { rejectValue: string | undefined }
+>("groups/fetchGroupAnalytics", async (_, { rejectWithValue }) => {
+  try {
+    const res = await api.get(`/groups/analytics`);
+    return res.data as GroupAnalyticsResponse;
   } catch (error) {
     let message;
     if (error instanceof Error) {

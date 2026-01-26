@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import Dashboard from "./pages/dashboards";
+import DashboardPage from "./pages/dashboard";
 import ExpensesPage from "./pages/expenses";
 import Footer from "./components/common/footer";
 import GroupPage from "./pages/group-page";
@@ -17,7 +17,7 @@ const App: React.FC = () => {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/settlements" element={<SettlementPage />} />
