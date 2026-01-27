@@ -1,6 +1,6 @@
+import type { MembersState } from "./member-types";
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchGroupMembers } from "./member-thunk";
-import type { MembersState } from "./member-types";
 
 const initialState: MembersState = {
   list: [],

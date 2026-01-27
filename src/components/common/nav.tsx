@@ -1,37 +1,55 @@
-import React from "react";
-import { motion } from "motion/react";
-import { primaryNav } from "../../constants/nav-options";
-import { KeyRoundIcon } from "lucide-react";
-import CustomButton from "../ui/custom-button";
 import {
+  SignInButton,
   SignedIn,
   SignedOut,
-  SignInButton,
   UserButton,
+  useAuth,
 } from "@clerk/clerk-react";
+
+import CustomButton from "../ui/custom-button";
+import { KeyRoundIcon } from "lucide-react";
 import Logo from "./logo";
+import React from "react";
+import { motion } from "framer-motion";
+import { notifyInfo } from "@/lib/toast";
+import { primaryNav } from "../../constants/nav-options";
 
 const Nav: React.FC = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+
+  const handleNavClick = (e: React.MouseEvent) => {
+    if (isLoaded && !isSignedIn) {
+      e.preventDefault();
+      notifyInfo(
+        "🔒 Secure access required. Please sign in to view your insights.",
+      );
+      return;
+    }
+  };
+
   return (
-    <motion.div className="z-9999 flex h-full w-full items-center justify-between border-b p-4 shadow-xl lg:bg-none lg:px-24 lg:shadow-none">
+    <motion.div className="z-9999 flex h-full w-full items-center justify-between border-b bg-white p-4 shadow-xl lg:bg-none lg:px-24 lg:shadow-none">
       <Logo />
-      <motion.div className="hidden items-center justify-center gap-6 font-medium text-gray-600 lg:flex">
-        {primaryNav.map((navItem) => (
+
+      <motion.div className="hidden items-center justify-center gap-8 font-semibold text-slate-600 lg:flex">
+        {primaryNav.map((navItem, index) => (
           <motion.a
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.3,
-              delay: 0.1 * primaryNav.indexOf(navItem),
+              delay: 0.1 * index,
             }}
             key={navItem.id}
             href={navItem.href}
-            className="hover:text-blue-500"
+            onClick={(e) => handleNavClick(e)}
+            className="text-sm tracking-tight transition-colors hover:text-blue-600"
           >
             {navItem.label}
           </motion.a>
         ))}
       </motion.div>
+
       <div>
         <SignedOut>
           <SignInButton mode="modal">
@@ -39,7 +57,9 @@ const Nav: React.FC = () => {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <div className="flex items-center gap-4">
+            <UserButton />
+          </div>
         </SignedIn>
       </div>
     </motion.div>

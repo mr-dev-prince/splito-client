@@ -1,6 +1,6 @@
+import type { GroupMember } from "../groups/group-types";
 import { api } from "@/lib/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { GroupMember } from "../groups/group-types";
 
 export const fetchGroupMembers = createAsyncThunk<
   GroupMember[],

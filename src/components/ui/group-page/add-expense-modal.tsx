@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { X, Users } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { notifyError, notifySuccess } from "@/lib/toast";
-import { useParams } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 import type {
   CreateExpensePayload,
   SplitStrategy,
 } from "@/redux/features/expenses/expense-type";
+import React, { useState } from "react";
+import { Users, X } from "lucide-react";
+import { notifyError, notifySuccess } from "@/lib/toast";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+
+import Loader from "../utils/loader-component";
 import { createExpense } from "@/redux/features/expenses/expense-thunk";
 import { fetchGroupData } from "@/redux/features/groups/group-thunks";
-import Loader from "../utils/loader-component";
+import { useParams } from "react-router-dom";
 
 interface AddExpenseModalProps {
   onClose: () => void;
@@ -106,8 +107,11 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
       await dispatch(fetchGroupData({ groupId: Number(groupId) })).unwrap();
       onClose();
     } catch (err) {
-      notifyError("Failed to add expense");
-      console.error(err);
+      if (err instanceof Error) {
+        notifyError(err.message);
+      } else {
+        notifyError("An unexpected error occurred");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -169,14 +173,12 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
                 </label>
                 <input
                   type="number"
-                  value={amount == 0 ? "Enter amount" : amount}
+                  value={amount === 0 ? "" : amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
                   placeholder="Enter amount"
                   className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none"
                 />
               </div>
-
-              {/* Split strategy */}
               <div>
                 <p className="mb-2 text-xs text-gray-500">Split strategy</p>
                 <div className="flex gap-2">

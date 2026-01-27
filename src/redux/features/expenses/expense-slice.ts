@@ -60,8 +60,7 @@ const expenseSlice = createSlice({
       .addCase(deleteExpense.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase(deleteExpense.rejected, (state, action) => {
-        console.log("delete-expense -> ", action.payload);
+      .addCase(deleteExpense.rejected, (state) => {
         state.loading = false;
         state.error = "Failed to delete expense";
       })
@@ -76,7 +75,6 @@ const expenseSlice = createSlice({
         state.myExpenses = action.payload;
       })
       .addCase(fetchMyExpenses.rejected, (state, action) => {
-        console.log("fetch-my-expenses -> ", action.payload);
         state.myExpensesLoading = false;
         state.myExpensesError = action.payload ?? "Something went wrong";
       });

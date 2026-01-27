@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+import expensesReducer from "./features/expenses/expense-slice";
 import groupsReducer from "./features/groups/group-slice";
 import membersReducer from "./features/members/member-slice";
-import expensesReducer from "./features/expenses/expense-slice";
+import userReducer from "./features/user/user-slice";
 
 export const store = configureStore({
   reducer: {
     groups: groupsReducer,
     members: membersReducer,
     expenses: expensesReducer,
+    user: userReducer,
   },
 });
 

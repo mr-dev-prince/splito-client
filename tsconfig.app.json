@@ -27,5 +27,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "deprecated/dashboard-ui/dash.tsx", "deprecated/dashboard-ui/dashboard-nav.tsx", "deprecated/dashboard-ui/group-card.tsx", "deprecated/dashboard-ui/pending.tsx", "deprecated/dashboard-ui/recent-activity.tsx", "deprecated/dashboard-ui/recent-groups.tsx", "deprecated/dashboard-ui/snapshot.tsx", "deprecated/pages/dashboards.tsx", "deprecated/plans", "deprecated/notifications", "deprecated/profile", "deprecated/analytics"]
 }

@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import type { AdminGroupSettlementResponse } from "@/redux/features/groups/group-types";
 import { BlueLoader } from "@/components/ui/utils/custom-loader";
+import VerifyPinModal from "@/components/ui/verify-security-pin";
 import { fetchAdminGroupSettlements } from "@/redux/features/groups/group-thunks";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -110,6 +111,9 @@ const AdminGroupCard = ({ group }: { group: AdminGroupSettlementResponse }) => {
 };
 
 const GroupAdminPage: React.FC = () => {
+  const isPinVerified = sessionStorage.getItem("isPinVerified") === "true";
+  const [verifyOpen, setVerifyOpen] = useState(!isPinVerified);
+
   const { adminGroupSettlements, adminGroupSettlementsLoading } =
     useAppSelector((state) => state.groups);
   const { isLoaded, isSignedIn } = useAuth();
@@ -121,58 +125,40 @@ const GroupAdminPage: React.FC = () => {
   }, [dispatch, isSignedIn, isLoaded]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] p-6 pb-20">
-      <div className="mx-auto max-w-3xl space-y-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded-[32px] bg-indigo-600 p-8 text-white shadow-xl shadow-indigo-100 md:col-span-2">
-            <h1 className="text-3xl font-black tracking-tight">
-              Admin Dashboard
-            </h1>
-            <p className="mt-1 font-medium text-indigo-100 opacity-80">
-              Managing {adminGroupSettlements.length} Active Groups
-            </p>
-            <div className="mt-6 flex gap-6">
-              <div>
-                <p className="text-[10px] font-bold tracking-widest text-indigo-300 uppercase">
-                  Managed Volume
-                </p>
-                <p className="text-2xl font-black">₹1.27L</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold tracking-widest text-indigo-300 uppercase">
-                  Open Debts
-                </p>
-                <p className="text-2xl font-black">12</p>
-              </div>
+    <>
+      <div className="min-h-screen bg-[#f8fafc] p-6 pb-20">
+        <div className="mx-auto max-w-3xl space-y-8">
+          <div className="w-full">
+            <div className="rounded-xl bg-indigo-600 p-8 text-white shadow-xl shadow-indigo-100 md:col-span-2">
+              <h1 className="text-3xl font-black tracking-tight">
+                Admin Dashboard
+              </h1>
+              <p className="mt-1 font-medium text-indigo-100 opacity-80">
+                Managing {adminGroupSettlements.length} Active Groups
+              </p>
             </div>
           </div>
-
-          <div className="flex cursor-pointer flex-col justify-between rounded-[32px] border border-dashed border-gray-300 bg-white p-6 transition-colors hover:border-indigo-300">
-            <p className="text-sm leading-tight font-bold text-gray-600">
-              Create a new group to manage
-            </p>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-900 text-white">
-              <span className="text-2xl font-light">+</span>
-            </div>
+          <div className="space-y-6">
+            <h2 className="px-2 text-sm font-black tracking-widest text-gray-400 uppercase">
+              Managed Groups
+            </h2>
+            {adminGroupSettlementsLoading ? (
+              <div className="flex w-full items-center justify-center">
+                <BlueLoader />
+              </div>
+            ) : (
+              adminGroupSettlements.map((group) => (
+                <AdminGroupCard key={group.group_id} group={group} />
+              ))
+            )}
           </div>
-        </div>
-
-        <div className="space-y-6">
-          <h2 className="px-2 text-sm font-black tracking-widest text-gray-400 uppercase">
-            Managed Groups
-          </h2>
-          {adminGroupSettlementsLoading ? (
-            <div className="flex w-full items-center justify-center">
-              <BlueLoader />
-            </div>
-          ) : (
-            adminGroupSettlements.map((group) => (
-              <AdminGroupCard key={group.group_id} group={group} />
-            ))
-          )}
         </div>
       </div>
-    </div>
+      <VerifyPinModal
+        isOpen={!isPinVerified && verifyOpen}
+        onClose={() => setVerifyOpen(false)}
+      />
+    </>
   );
 };
 

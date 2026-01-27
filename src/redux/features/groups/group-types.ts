@@ -79,12 +79,10 @@ export interface AdminGroupSettlementResponse {
 export interface GroupAnalyticsResponse {
   mtd_total: number;
   lifetime_total: number;
-  top_groups: {
-    name: string;
-    amount: number;
-  }[];
-  top_months: {
-    period: string;
-    amount: number;
-  }[];
+  avg_monthly_expense: number;
+  owed_to_you: number;
+  you_owe: number;
+  total_active_groups: number;
+  top_groups: { name: string; amount: number }[];
+  top_months: { period: string; amount: number }[];
 }

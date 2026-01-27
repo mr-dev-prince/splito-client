@@ -1,13 +1,14 @@
+import { AnimatePresence, motion } from "motion/react";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { X, Trash2, Users } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Trash2, Users, X } from "lucide-react";
 import {
   fetchGroupData,
   updateGroupName,
 } from "@/redux/features/groups/group-thunks";
-import { notifyError } from "@/lib/toast";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+
 import Loader from "../utils/loader-component";
+import { notifyError } from "@/lib/toast";
 
 interface Member {
   id: number;
@@ -47,7 +48,7 @@ const EditGroupModal: React.FC<EditGroupModalProps> = ({
       if (error instanceof Error) {
         notifyError(error.message);
       } else {
-        console.error("Failed to update group name:", error);
+        notifyError("Failed to update group name");
       }
     }
   };
