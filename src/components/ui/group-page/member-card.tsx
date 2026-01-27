@@ -1,6 +1,7 @@
-import React from "react";
-import type { Member } from "@/redux/features/members/member-types";
 import { Bell } from "lucide-react";
+import type { Member } from "@/redux/features/members/member-types";
+import React from "react";
+import { notifyInfo } from "@/lib/toast";
 
 interface MemberCardProps {
   data: Member;
@@ -17,7 +18,10 @@ const MemberCard: React.FC<MemberCardProps> = ({ data }) => {
         </div>
         <p className="text-sm text-gray-700">{data?.name}</p>
       </div>
-      <button className="rounded-lg p-2 text-gray-400 hover:bg-gray-100">
+      <button
+        onClick={() => notifyInfo("Send reminder feature coming soon.")}
+        className="rounded-lg p-2 text-gray-400 hover:bg-gray-100"
+      >
         <Bell size={16} />
       </button>
     </div>

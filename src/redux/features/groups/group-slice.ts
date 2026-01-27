@@ -107,19 +107,17 @@ const groupsSlice = createSlice({
       })
 
       // delete group
-      .addCase(deleteGroup.fulfilled, (state, action) => {
-        state.list = state.list.filter(
-          (group) => group.id !== (action.meta.arg.groupId as number),
-        );
+      .addCase(deleteGroup.pending, (state) => {
+        state.deleteGroupLoading = true;
+        state.deleteGroupError = null;
+      })
+      .addCase(deleteGroup.fulfilled, (state) => {
         state.deleteGroupLoading = false;
+        state.deleteGroupError = null;
       })
       .addCase(deleteGroup.rejected, (state, action) => {
         state.deleteGroupError = action.payload as string;
         state.deleteGroupLoading = false;
-      })
-      .addCase(deleteGroup.pending, (state) => {
-        state.deleteGroupLoading = true;
-        state.deleteGroupError = null;
       })
 
       // fetchWeeklyActivity

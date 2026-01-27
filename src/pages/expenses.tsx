@@ -1,4 +1,3 @@
-import { Filter, Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -6,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import ExpenseRow from "@/components/ui/expenses/expense-row";
 import ExpenseRowSkeleton from "@/components/ui/shimmers/expense-row";
 import ListWithSkeleton from "@/components/ui/utils/list-with-skeleton";
+import { RefreshCcw } from "lucide-react";
 import VerifyPinModal from "@/components/ui/verify-security-pin";
 import { fetchMyExpenses } from "@/redux/features/expenses/expense-thunk";
 import { notifyError } from "@/lib/toast";
@@ -21,6 +21,10 @@ const ExpensesPage: React.FC = () => {
 
   const { isSignedIn, isLoaded } = useAuth();
   const dispatch = useAppDispatch();
+
+  const handleRefresh = async () => {
+    await dispatch(fetchMyExpenses());
+  };
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -48,11 +52,11 @@ const ExpensesPage: React.FC = () => {
             </div>
 
             <div className="flex gap-2">
-              <button className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-gray-500 shadow-sm ring-1 ring-gray-200 hover:bg-gray-50">
-                <Search size={18} />
-              </button>
-              <button className="flex h-11 items-center gap-2 rounded-2xl bg-white px-4 text-sm font-bold text-gray-700 shadow-sm ring-1 ring-gray-200 hover:bg-gray-50">
-                <Filter size={18} /> Filter
+              <button
+                onClick={handleRefresh}
+                className="flex h-11 items-center gap-2 rounded-2xl bg-white px-4 text-sm font-bold text-gray-700 shadow-sm ring-1 ring-gray-200 hover:bg-gray-50"
+              >
+                <RefreshCcw size={18} /> Refresh
               </button>
             </div>
           </header>

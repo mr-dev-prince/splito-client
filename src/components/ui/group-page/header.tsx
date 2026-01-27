@@ -1,27 +1,23 @@
+import { BanknoteArrowUp, Edit, Trash2, UserRoundPlus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import {
-  BanknoteArrowUp,
-  Edit,
-  LogOut,
-  Trash2,
-  UserRoundPlus,
-} from "lucide-react";
-import AddMemberModal from "./add-member-modal";
-import AddExpenseModal from "./add-expense-modal";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   deleteGroup,
   fetchGroupData,
+  fetchGroups,
 } from "@/redux/features/groups/group-thunks";
+import { notifyError, notifySuccess } from "@/lib/toast";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+
+import AddExpenseModal from "./add-expense-modal";
+import AddMemberModal from "./add-member-modal";
 import ComponentWithSkeleton from "../utils/component-with-skeleton";
-import GroupHeaderShimmer from "../shimmers/group-header-shimmer";
-import type { GroupDetails } from "@/redux/features/groups/group-types";
 import ConfirmationPopUp from "../utils/confirmation-pop-up";
-import { notifyError } from "@/lib/toast";
 import EditGroupModal from "./edit-group-modal";
+import type { GroupDetails } from "@/redux/features/groups/group-types";
+import GroupHeaderShimmer from "../shimmers/group-header-shimmer";
+import { motion } from "motion/react";
+import { useAuth } from "@clerk/clerk-react";
 
 interface GroupHeaderComponentProps {
   data: GroupDetails | null;
@@ -66,8 +62,7 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
     useState<boolean>(false);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
     useState<boolean>(false);
-  const [isExitConfirmationOpen, setIsExitConfirmationOpen] =
-    useState<boolean>(false);
+
   const [isEditGroupModalOpen, setIsEditGroupModalOpen] =
     useState<boolean>(false);
 
@@ -78,15 +73,15 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
   const dispatch = useAppDispatch();
 
   const handleDeleteGroup = async () => {
+    if (!data?.id) return;
     try {
-      if (!data?.id) return;
-      await dispatch(deleteGroup({ groupId: data.id }));
+      await dispatch(deleteGroup({ groupId: data.id })).unwrap();
       setIsDeleteConfirmationOpen(false);
+      await dispatch(fetchGroups());
       router("/groups");
+      notifySuccess("Group deleted successfully");
     } catch (error) {
-      if (error instanceof Error) {
-        notifyError(error.message);
-      }
+      notifyError((error as string) || "Failed to delete group");
     }
   };
 
@@ -133,14 +128,6 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
             <Trash2 size={16} />
           </motion.button>
         )}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsExitConfirmationOpen(true)}
-          className="rounded-xl border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
-        >
-          <LogOut size={16} />
-        </motion.button>
       </div>
       <AddMemberModal
         open={isAddMemberModalOpen}
@@ -157,19 +144,12 @@ const GroupHeaderComponent: React.FC<GroupHeaderComponentProps> = ({
         open={isDeleteConfirmationOpen}
         loading={deleteGroupLoading}
       />
-      <ConfirmationPopUp
-        message="Are you sure you want to exit this group ?"
-        onConfirm={() => {}}
-        onCancel={() => setIsExitConfirmationOpen(false)}
-        open={isExitConfirmationOpen}
-      />
       <EditGroupModal
         open={isEditGroupModalOpen}
         onClose={() => setIsEditGroupModalOpen(false)}
         groupName={data?.name || ""}
         groupId={data?.id || 0}
         members={list}
-        onRemoveMember={() => {}}
       />
     </div>
   );

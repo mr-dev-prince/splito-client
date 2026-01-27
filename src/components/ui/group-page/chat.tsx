@@ -1,5 +1,6 @@
-import { Send } from "lucide-react";
 import React from "react";
+import { Send } from "lucide-react";
+import { notifyInfo } from "@/lib/toast";
 
 const Chats: React.FC = () => {
   return (
@@ -9,18 +10,21 @@ const Chats: React.FC = () => {
       </div>
       <div className="flex-1 space-y-2 overflow-y-auto p-4 text-sm text-gray-600">
         <p>
-          <b>Rahul:</b> Who paid for lunch?
+          <b>User :</b> Is this feature available now?
         </p>
         <p>
-          <b>You:</b> I did.
+          <b>Developer :</b> Not yet.
         </p>
       </div>
       <div className="flex items-center gap-2 border-t p-3">
         <input
-          placeholder="Type a message"
+          placeholder="This feature is coming soon..."
           className="flex-1 rounded-xl border px-3 py-2 text-sm"
         />
-        <button className="rounded-xl bg-blue-600 p-2 text-white">
+        <button
+          onClick={() => notifyInfo("Group chat feature coming soon...")}
+          className="rounded-xl bg-blue-600 p-2 text-white"
+        >
           <Send size={16} />
         </button>
       </div>

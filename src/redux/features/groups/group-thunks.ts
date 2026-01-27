@@ -7,6 +7,7 @@ import type {
   WeeklyActivityResponse,
 } from "./group-types";
 
+import { AxiosError } from "axios";
 import { api } from "@/lib/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -69,22 +70,6 @@ export const addGroupMember = createAsyncThunk<
   },
 );
 
-export const removeGroupMember = createAsyncThunk<
-  void,
-  { memberId: number },
-  { rejectValue: string | undefined }
->("members/removeMember", async ({ memberId }, { rejectWithValue }) => {
-  try {
-    await api.delete(`/members/${memberId}`);
-  } catch (error) {
-    let message = "An unexpected error occurred.";
-    if (error instanceof Error) {
-      message = error.message;
-    }
-    return rejectWithValue(message);
-  }
-});
-
 export const fetchGroupData = createAsyncThunk<
   Group,
   { groupId: number },
@@ -106,13 +91,16 @@ export const deleteGroup = createAsyncThunk<
   void,
   { groupId: number },
   { rejectValue: string | undefined }
->("groups/deleteGroup", async ({ groupId }, { dispatch, rejectWithValue }) => {
+>("groups/deleteGroup", async ({ groupId }, { rejectWithValue }) => {
   try {
-    await api.delete(`/groups/${groupId}`);
-    dispatch(fetchGroups());
+    const res = await api.delete(`/groups/${groupId}`);
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     let message;
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
+      message = error.response?.data?.detail;
+    } else if (error instanceof Error) {
       message = error.message;
     }
     return rejectWithValue(message);

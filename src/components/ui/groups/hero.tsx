@@ -1,4 +1,4 @@
-import { ArrowUpRight, Plus } from "lucide-react";
+import { ArrowUpRight, Plus, RefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -18,6 +18,10 @@ const Hero: React.FC = () => {
   const groupCount = list.length;
   const memberCount =
     list.reduce((acc, group) => acc + group.member_count, 0) - groupCount;
+
+  const handleRefresh = async () => {
+    await dispatch(fetchGroups());
+  };
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -54,19 +58,22 @@ const Hero: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            {/* <button className="flex h-12 w-12 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900">
-              <Search size={20} />
-            </button> */}
             <motion.button
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setOpenModal(true)}
-              className="flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-gray-200 transition-all hover:bg-black"
+              className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-gray-200 transition-all hover:bg-black"
             >
               <Plus size={18} strokeWidth={3} />
               New Group
               <ArrowUpRight size={14} className="ml-1 opacity-50" />
             </motion.button>
+            <button
+              onClick={handleRefresh}
+              className="flex h-12 w-12 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900"
+            >
+              <RefreshCcw size={20} />
+            </button>
           </div>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-4 border-t border-gray-100 pt-8 md:grid-cols-4">

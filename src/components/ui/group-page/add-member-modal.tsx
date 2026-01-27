@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { notifyError, notifySuccess } from "@/lib/toast";
-import { Users, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useAppDispatch } from "@/redux/hooks";
+import React, { useState } from "react";
+import { Users, X } from "lucide-react";
+import { notifyError, notifySuccess } from "@/lib/toast";
+
 import { addGroupMember } from "@/redux/features/groups/group-thunks";
+import { fetchGroupMembers } from "@/redux/features/members/member-thunk";
+import { useAppDispatch } from "@/redux/hooks";
 
 interface AddMemberModalProps {
   open: boolean;
@@ -51,6 +53,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose }) => {
     );
 
     if (addGroupMember.fulfilled.match(res)) {
+      await dispatch(fetchGroupMembers({ groupId: Number(groupId) }));
       notifySuccess("Group member added successfully!");
       setName("");
       onClose();

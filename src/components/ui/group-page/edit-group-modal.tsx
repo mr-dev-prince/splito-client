@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import React, { useState } from "react";
-import { Trash2, Users, X } from "lucide-react";
+import { Users, X } from "lucide-react";
 import {
   fetchGroupData,
   updateGroupName,
@@ -21,7 +21,6 @@ interface EditGroupModalProps {
   groupId: number;
   groupName: string;
   members: Member[];
-  onRemoveMember: (id: number) => void;
 }
 
 const EditGroupModal: React.FC<EditGroupModalProps> = ({
@@ -30,11 +29,8 @@ const EditGroupModal: React.FC<EditGroupModalProps> = ({
   groupId,
   groupName,
   members,
-  onRemoveMember,
 }) => {
   const [name, setName] = useState(groupName);
-  const [confirm, setConfirm] = useState(false);
-  const [removeId, setRemoveId] = useState<number | null>(null);
 
   const { currentGroupUpdating } = useAppSelector((state) => state.groups);
 
@@ -125,38 +121,6 @@ const EditGroupModal: React.FC<EditGroupModalProps> = ({
                   </div>
                   <p className="text-sm text-gray-700">{m.name}</p>
                 </div>
-
-                {confirm && removeId === m.id ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <button
-                      onClick={() => setConfirm(false)}
-                      className="h-8 rounded-lg bg-gray-200 px-2 text-sm text-gray-700 hover:bg-gray-300"
-                    >
-                      <X size={16} />
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (removeId !== null) {
-                          onRemoveMember(removeId);
-                        }
-                        setConfirm(false);
-                      }}
-                      className="mr-2 h-8 rounded-lg bg-red-500 px-2 text-sm text-white hover:bg-red-600"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setConfirm(true);
-                      setRemoveId(m.id);
-                    }}
-                    className="rounded-lg p-2 text-red-500 hover:bg-red-50"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                )}
               </div>
             ))}
           </div>
