@@ -15,6 +15,8 @@ const initialState: ExpensesState = {
   myExpenses: [],
   myExpensesLoading: false,
   myExpensesError: null,
+  createExpenseLoading: false,
+  createExpenseError: null,
 };
 
 const expenseSlice = createSlice({
@@ -43,14 +45,16 @@ const expenseSlice = createSlice({
 
       // createExpense
       .addCase(createExpense.pending, (state) => {
-        state.loading = true;
+        state.createExpenseLoading = true;
+        state.createExpenseError = null;
       })
       .addCase(createExpense.fulfilled, (state) => {
-        state.loading = false;
+        state.createExpenseLoading = false;
       })
       .addCase(createExpense.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload ?? "Failed to create expense";
+        console.log("action-->", action);
+        state.createExpenseLoading = false;
+        state.createExpenseError = action.payload || "Failed to create expense";
       })
 
       // deleteExpense

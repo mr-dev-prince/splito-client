@@ -107,11 +107,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ open, onClose }) => {
       await dispatch(fetchGroupData({ groupId: Number(groupId) })).unwrap();
       onClose();
     } catch (err) {
-      if (err instanceof Error) {
-        notifyError(err.message);
-      } else {
-        notifyError("An unexpected error occurred");
-      }
+      notifyError((err as string) || "Failed to add expense");
     } finally {
       setSubmitting(false);
     }

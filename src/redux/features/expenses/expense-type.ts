@@ -20,6 +20,8 @@ export interface ExpensesState {
   myExpenses: ExpenseType[];
   myExpensesLoading: boolean;
   myExpensesError: string | null;
+  createExpenseLoading: boolean;
+  createExpenseError: string | null;
 }
 
 export interface ExpenseSplitInput {

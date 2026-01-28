@@ -6,7 +6,7 @@ import {
 } from "./expense-type";
 import { api } from "@/lib/api";
 import { fetchGroupData } from "../groups/group-thunks";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const fetchExpenses = createAsyncThunk<
   ExpenseType[],
@@ -41,8 +41,9 @@ export const createExpense = createAsyncThunk<
       return res.data;
     } catch (err) {
       let message = "An unexpected error occurred.";
-      if (err instanceof Error) {
-        message = err.message;
+      if (err instanceof AxiosError) {
+        console.log(err);
+        message = err.response?.data?.detail || message;
       }
       return rejectWithValue(message);
     }
