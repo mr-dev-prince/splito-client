@@ -15,6 +15,7 @@ const ExpensesPage: React.FC = () => {
   const { myExpenses, myExpensesError, myExpensesLoading } = useAppSelector(
     (state) => state.expenses,
   );
+  const { currentUser } = useAppSelector((state) => state.user);
 
   const isPinVerified = sessionStorage.getItem("isPinVerified") === "true";
   const [verifyOpen, setVerifyOpen] = useState(!isPinVerified);
@@ -77,7 +78,7 @@ const ExpensesPage: React.FC = () => {
         </div>
       </div>
       <VerifyPinModal
-        isOpen={!isPinVerified && verifyOpen}
+        isOpen={Boolean(currentUser?.security_pin_active) && verifyOpen}
         onClose={() => setVerifyOpen(false)}
       />
     </>

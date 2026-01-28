@@ -32,7 +32,7 @@ const Groups: React.FC = () => {
         <GroupsTab />
       </div>
       <VerifyPinModal
-        isOpen={verifyOpen}
+        isOpen={Boolean(currentUser?.security_pin_active) && verifyOpen}
         onClose={() => setVerifyOpen(false)}
       />
     </>

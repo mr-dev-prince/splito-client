@@ -111,6 +111,7 @@ const AdminGroupCard = ({ group }: { group: AdminGroupSettlementResponse }) => {
 };
 
 const GroupAdminPage: React.FC = () => {
+  const { currentUser } = useAppSelector((state) => state.user);
   const isPinVerified = sessionStorage.getItem("isPinVerified") === "true";
   const [verifyOpen, setVerifyOpen] = useState(!isPinVerified);
 
@@ -155,7 +156,7 @@ const GroupAdminPage: React.FC = () => {
         </div>
       </div>
       <VerifyPinModal
-        isOpen={!isPinVerified && verifyOpen}
+        isOpen={Boolean(currentUser?.security_pin_active) && verifyOpen}
         onClose={() => setVerifyOpen(false)}
       />
     </>
