@@ -5,6 +5,7 @@
 Splito is a modern expense management application that helps individuals and groups track, split, and settle expenses with clarity.  
 Whether it’s personal spending or shared costs across trips, flats, or teams — Splito keeps money simple.
 
+### Backend Code [ FastAPI ] : `https://github.com/mr-dev-prince/splito-server`
 ---
 
 ## ✨ Features
